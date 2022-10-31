@@ -1,0 +1,356 @@
+<?//when radio option none?>
+
+<style>
+	.editorRightC { position:relative;}
+	.editorRightC .title { border-bottom: 1px solid #e6e6e6;color: #5a5a5a;font-size: 19px;font-weight: bold;padding: 0 0 5px 5px; text-align: center;}
+	.editorRightC .title h2 { color: #5a5a5a;}
+	.editorRightC .images { text-align:center; margin-top:10px; border-bottom:1px solid #CACACA; padding-bottom:10px;}
+	.editorRightC .prdouct-name { margin-top:6px;}
+	.editorRightC .options { font-size:11px;}
+	.new-stickyfloat  {  padding:10px 13px !important; }
+	.stickyfloat {-webkit-box-shadow:0px 0px 5px #999; -moz-box-shadow:0px 0px 5px #999; box-shadow:0px 0px 5px #999; background:#f6f6f6; float:right; right: 0;}
+	.qtys-option { float :left; padding-left:7%; }
+	.options-text { float: right;width: 93%; margin: 3px 0 3px 0;}
+	.extra_color { clear:both;}
+	.editorRightC .product-options-bottom {border-top:1px solid #e4e4e4; clear:both; margin-bottom:10px; text-align: center; font-size: 19px;}
+	/* .options-left { width:95% !important; } */
+	.seperator { display: none; }
+	.seperator-second { background: url('<?php echo $this->getSkinUrl('images/bkg_divider1.gif');?>') repeat-x bottom; height:1px; float:left; width:100%;}
+	/* .options-right { margin-left:25px;} */
+	.editorRightC .add-to-cart .qty { margin-right: 2px;}
+	.editorRightC .price-notice {display:none;}
+	
+</style>
+<?php
+$_product = $this->getProduct();
+$_helper = $this->helper('catalog/output');
+?>
+<div class="editorRightC">
+    <div id="stickyfloat" class="stickyfloat">
+		<div class="new-stickyfloat">
+		<div class="title">
+			<h1><?php echo $this->__('Summary');?></h1>
+		</div>
+		<?php if(Mage::getStoreConfig('selectedoptionssummary/general/image') == '1') : ?>
+		<div class="images">
+			<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" />
+			<br/>
+			<div class="prdouct-name">
+				<b><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></b>
+			</div>
+		</div>
+		<?php endif; ?>
+		<div class="product-options-bottom">
+			<p><?php echo $this->__('Total Price:');?><span id="price-right"></span></p>
+			<?php if($_product->isSaleable()): ?>
+				<div class="add-to-cart">
+					<?php if(!$_product->isGrouped()): ?>
+						<label for="qty"><?php echo $this->__('Qty:') ?></label>
+						<input type="text" name="qty_right" id="qty_right" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty"/>
+						<?php endif; ?>
+					<button type="button" title="<?php echo $this->__('Add to Cart'); ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $this->__('Add to Cart'); ?></span></span></button>
+				</div>
+			<?php endif; ?>
+		</div>
+			<?php $options =  $_product->getOptions() ?>
+		<div class="options" style="position:relative;">
+			<?php foreach($options as $_option):?>
+				<div class="seperator">
+				<div class="extra_color" id="extra_color_<?php echo $_option->getId();?>"><?php echo "<b><strong>".$_option->getTitle().'</b></strong>';?></div>
+				<div id="extra_qty<?php echo $_option->getId();?>" class="qtys-option">
+				</div>
+				<div id="extra_<?php echo $_option->getId();?>" class="options-text <?php if(in_array($_option->getType(),array('multi','checkbox'))):?> options-left<?php endif;?>">
+				<?php $flag =false;?>
+				<?php $newflag = false;?>
+			   <?php if(count($_option->getSelections()) ==1):?>
+					<?php $newflag =1;?>
+			   <?php endif;?>
+				<?php foreach($_option->getSelections() as $_selection):?>
+					<?php if($_selection->getIsDefault() ==1 || ($newflag == 1  && $_option->getRequired() ==1)):?>
+						<?php $flag =true;?>
+						<?php //echo $_selection->getName();?>
+						<div class="selected-option selected-options-value">
+						<?php //echo $_selection->getSelectionQty()*1 . ' x ';?>
+						<?php echo $this->getLayout()->createBlock('selectedoptionssummary/selectedoptions')->getOptionDescription($_selection, true); ?>
+						</div>
+						<?php echo "<br/>";?>
+					<?php endif;?>
+				<?php endforeach;?>
+				<?php if($flag == false):?>
+					<div class="selected-option selected-options-value <?php if(in_array($_option->getType(),array('multi','checkbox'))):?> options-right<?php endif;?>"><?php echo $this->__('None');?></div>
+
+				<?php endif;?>
+				</div>
+				</div>
+				<?php /*	
+				<div class="seperator-second"></div>
+				<p>&nbsp;<br /></p>
+				*/ ?>
+			<?php endforeach;?>
+		</div>
+			<br/>
+		</div>
+			
+
+	</div>
+</div>
+<script>
+	$('qty_right').observe('change', function(event) {
+			$('qty').value = $('qty_right').value;
+	});
+	$('qty').observe('change', function(event) {
+			$('qty_right').value = $('qty').value;
+	});
+	jQuery.fn.stickyfloat = function(options, lockBottom) {
+
+		        var obj = this;
+		        var floaty = obj.offset().top;
+                var footery = jQuery('.footer-container').offset().top;
+			    var startOffset = obj.parent().offset().top;
+			    var parentPaddingTop = startOffset - obj.parent().parent().offset().top;
+			    var opts = jQuery.extend({ startOffset: startOffset, offsetY: parentPaddingTop, duration: 200, lockBottom:true }, options);
+			    var originalWidth = obj.width();
+
+			    if(opts.lockBottom) {
+				    var bottomPos = footery - (obj.outerHeight() + floaty + 14 + startOffset); //get the maximum scrollTop value
+				    if (bottomPos < 0) {
+				        bottomPos = 0;
+				    }
+			    }
+
+			    if(bottomPos > obj.outerHeight()) {
+
+			        obj.css('width', originalWidth + 'px');
+			        obj.css({ position: 'absolute', top : parentPaddingTop+ 'px'});
+
+			        function updateFloat() {
+
+			            obj.stop(); // stop all calculations on scroll event
+			            var scrollTop = jQuery(document).scrollTop();
+
+				        var footery = jQuery('.footer-container').offset().top;
+				        if(opts.lockBottom){
+				            var bottomPos = footery - (obj.outerHeight() + floaty + 14); //get the maximum scrollTop value
+				            if( bottomPos < 0 )
+					            bottomPos = 0;
+			            }
+
+				        var pastStartOffset			= scrollTop > opts.startOffset;	// check if the window was scrolled down more than the start offset declared.
+				        var objFartherThanTopPos	= obj.offset().top > startOffset;	// check if the object is at it's top position (starting point)
+				        var objBiggerThanWindow 	= obj.outerHeight() < jQuery(window).height();	// if the window size is smaller than the Obj size, then do not animate.
+
+				        // if window scrolled down more than startOffset OR obj position is greater than
+				        // the top position possible (+ offsetY) AND window size must be bigger than Obj size
+				        // if( (pastStartOffset || objFartherThanTopPos) && objBiggerThanWindow )
+				        if((pastStartOffset || objFartherThanTopPos)) {
+
+					        var newpos = ((scrollTop - startOffset) + parentPaddingTop);
+					        if (newpos > ((bottomPos + 14) + parentPaddingTop)) {
+						        newpos = bottomPos + parentPaddingTop;
+					        }
+					        if ( scrollTop < (parentPaddingTop - 14)) {// if window scrolled < starting offset, then reset Obj position (opts.offsetY);
+						        newpos = parentPaddingTop - 14;
+		                    }
+		                    if(newpos < parentPaddingTop) {
+		                        newpos = parentPaddingTop - 14;
+	                        }
+
+					        obj.animate({ top: newpos }, opts.duration );
+				        }
+                    }
+
+                    if(window.location.hash) {
+                        updateFloat();
+                    }
+
+	                jQuery(window).scroll(function () {
+	                    updateFloat();
+                    });
+                }
+		    };
+			
+		jQuery.fn.shake = function() {
+			this.each(function(i) {
+				jQuery(this).css({ "position": "relative" });
+				for (var x = 1; x <= 2; x++) {
+					jQuery(this).animate({ left: -10 }, 100).animate({ left: 0 }, 100); 
+					//.animate({ left: 25 }, 10).animate({ left: 0 }, 50);
+				}
+			});
+			return this;
+		}	
+	jQuery(document).ready(function() {
+		jQuery('.stickyfloat').stickyfloat({ duration: 400 });
+
+	});
+</script>
+
+<script>
+function fillSelectedValues(obj,str,type){
+	var b = 0;
+	obj.id.sub(/[0-9]+/, function (c) {	b = c[0]; });
+	
+	if(obj.type !='select-multiple' && obj.type !='checkbox'){
+	
+	str = str.split('+')[0];
+	}
+	
+	$('extra_'+b).innerHTML = "<div class='selected-option'>"+str+"</div>";
+    type = type || 'change';
+	if(type=='change'){
+		$('extra_'+b).up('.seperator').style.display='block';
+		hideDisableField();
+	}
+	var applyCssOn = '#extra_'+b+' .selected-option';
+	$$(applyCssOn).first().style.color ='red';
+	$$(applyCssOn).first().style.fontSize ='16px';
+	$$(applyCssOn).first().style.fontWeight ='bold';
+	setTimeout(function(){ $$(applyCssOn).first().style.color='#D77103';},1000);
+	setTimeout(function(){ $$(applyCssOn).first().style.fontSize='11px';},1000);
+	setTimeout(function(){ $$(applyCssOn).first().style.fontWeight='normal';},1000);
+}
+function checkCheckbox(a){
+	var selectedCheckboxes = '';
+	var checkboxName = a.name;
+	$$('input[name^='+checkboxName+']').each(function(row) {
+	   if (row.checked && row.value != '') {
+			str =$$('label[for="'+row.id+'"]').first().innerHTML.split('+')[0];
+			selectedCheckboxes += str.replace('<span class="price-notice">')+'<br />';
+	   }
+	});
+	if(selectedCheckboxes==''){
+		selectedCheckboxes = 'None';
+	}
+	return selectedCheckboxes;
+}
+function checkRadio(a){
+	var selectedRadio = 'None';
+	if(a.checked){
+		selectedRadio = $$('label[for="'+a.id+'"]').first().innerHTML;
+		str=a.id
+		str = str.split('_')[1];
+		$('extra_color_'+str).up('.seperator').style.display='block';
+	}
+	return selectedRadio;
+}
+function checkDropDown(a){
+	var selectedDropDown ="None";
+	if(a.value!=''){
+		selectedDropDown =$(a.id)[$(a.id).selectedIndex].text;
+	}
+	return selectedDropDown;
+}
+function checkMultiSelect(a){
+	var selectedMultiSelect = '';
+	var options = a;
+	var len = options.length;
+	for (var i = 0; i < len; i++) {
+		if(options[i].selected){
+			selectedMultiSelect += options[i].text.split('+')[0]+'<br />';		
+		}
+	}
+	if(selectedMultiSelect==''){
+		selectedMultiSelect = 'None';
+	}
+	return selectedMultiSelect;
+}
+function checkOther(a){
+	selectedText =  "None";
+	if(a.value!=''){
+		selectedText = a.value;
+	}
+	return selectedText;
+}
+
+ $$(".product-custom-option").each(function (a) {
+		fireCustomEvent(a,'load','allelements');
+		if(a.type == "radio")
+		{
+			a.observe("click", function(event) {
+				fireCustomEvent(a,'change');
+			});
+		}else if (a.type == "checkbox") {
+			a.observe("click", function(event) {
+				fireCustomEvent(a,'change');
+			});
+		}else if (a.type == "select-one") {
+			a.observe("click", function(event) {
+				fireCustomEvent(a,'change');
+			});
+		}else {
+			a.observe("change", function(event) {
+				fireCustomEvent(a,'change');
+			});
+		}
+	});
+	function fireCustomEvent(a,type,allelements){
+		
+		allelements = allelements || '';
+		if (a.type == "select-one") {
+			selected = checkDropDown(a);				
+			fillSelectedValues(a,selected,type);
+		}else if (a.type == "select-multiple") {
+			selected = checkMultiSelect(a);
+			fillSelectedValues(a,selected,type);
+		}else if (a.type == "checkbox") {
+			selected = checkCheckbox(a);
+			fillSelectedValues(a,selected,type);
+		}else if (a.type == "radio") {
+			if(a.checked ==true){ 
+				selected = checkRadio(a);
+				fillSelectedValues(a,selected,'change');
+			 }else{
+				var b = 0;
+				a.id.sub(/[0-9]+/, function (c) {	b = c[0]; });
+				$('extra_'+b).up('.seperator').style.display='none';
+			} 
+		}else{
+			selected = checkOther(a);
+			fillSelectedValues(a, selected,type);		
+		}
+		reloadRightPrice(type,allelements);
+	}
+	function hideDisableField(){
+		
+		var selectedFinal=false;
+		$$(".product-custom-option").each(function (a) {
+			var temp=new Array();
+			if (a.type == "select-one") {
+				selected = checkDropDown(a);
+			}else if (a.type == "checkbox") {
+				selected = checkCheckbox(a);				
+			}else if (a.type == "radio") {
+				selected = checkRadio(a);
+				/* a.id.sub(/[0-9]+/, function (c) {	b = c[0]; });
+				console.log(selected);
+				if(selected!='None' && temp[b]=== undefined){
+				temp[b] ='selected';
+				selectedFinal = true;
+				}	 */		
+			}else{
+				selected = checkOther(a);
+			}
+			
+			if(selected=='None' && a.type != "radio" ){
+			
+				var b = 0;
+				a.id.sub(/[0-9]+/, function (c) {	b = c[0]; });
+				$('extra_'+b).up('.seperator').style.display='none';				
+			} 
+		})
+	}
+	
+	 function reloadRightPrice(type,allelements){
+		var rightPrice = $('product-price-'+'<?php echo $_product->getId();?>').innerHTML;
+		$('price-right').innerHTML = rightPrice;
+		if(allelements!='allelements'){
+			jQuery("#price-right").shake();
+		}
+		$$('#price-right .price').first().style.color='red';
+		$$('#price-right .price').first().style.fontSize='2.16em';
+		$$('#price-right .price').first().style.fontWeight='bold';
+		setTimeout(function(){ $$('#price-right .price').first().style.color='#FFB239';},1000);
+		setTimeout(function(){ $$('#price-right .price').first().style.fontSize='1.16em';},1000);
+		setTimeout(function(){ $$('#price-right .price').first().style.fontWeight='normal';},1000);
+	} 
+</script>

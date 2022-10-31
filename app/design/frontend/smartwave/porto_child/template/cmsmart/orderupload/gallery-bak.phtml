@@ -1,0 +1,304 @@
+<?php
+/**
+ * Template for block Mage_Adminhtml_Block_Catalog_Product_Helper_Form_Gallery_Content
+ */
+?>
+<?php
+//$this = $this;
+/* @var $this Mage_Adminhtml_Block_Catalog_Product_Helper_Form_Gallery_Content */
+$currentproduct = Mage::registry('current_product');
+$id_current=$currentproduct->getId();
+$storeId = Mage::app()->getStore()->getStoreId();
+$product_id = Mage::registry('current_product')->getId();
+$attribute = Mage::getResourceModel('catalog/product')->getAttributeRawValue($product_id, 'order_upload', $storeId);
+if($attribute == 1){
+// create url delete files
+$url_delete=Mage::getUrl('orderupload/gallery/deleteImage', array('productid' => $id_current));
+
+// create url update
+$url_update=Mage::getUrl('orderupload/gallery/updateInfo', array('productid' => $id_current));
+
+$url_getimages=Mage::getUrl('orderupload/gallery/getImages', array('productid' => $id_current));
+
+$url_delete_all=Mage::getUrl('orderupload/gallery/deleteAllImage', array('productid' => $id_current));
+?>
+<!-- <div id="overlay_modal" ></div> -->
+<div id="upload_files_nbm" style="display:none;">
+<div id="<?php echo $this->getHtmlId() ?>" >
+<div class="grid">
+	<form method="post" action="<?php echo Mage::getUrl('orderupload/gallery/upload', array('productid' => $id_current)); ?>" id="formupload" enctype="multipart/form-data" target="iframeformupload">	
+		<div class="descriptions"></div>		
+		<div class="buttonuploadblock">
+			<div class="loading">&nbsp;</div>
+			<label class="file">
+				<button class="button" type="button" title="<?php echo Mage::helper('orderupload')->__('Browse Files...') ?>" ><span><span><?php echo Mage::helper('orderupload')->__('Browse Files...') ?></span></span></button>
+				<input name="uploads[]"  multiple="multiple" class="buttons" type="file" accept="image/*" />
+			</label>
+			
+			<button class="button" type="submit" title="<?php echo Mage::helper('orderupload')->__('Upload Files') ?>" ><span><span><?php echo Mage::helper('catalog')->__('Upload Files') ?></span></span></button>
+			
+			<!--
+			<button class="button" type="reset" title="<?php echo Mage::helper('orderupload')->__('Update') ?>" ><span><span><?php echo Mage::helper('catalog')->__('Update') ?></span></span></button>
+			-->
+		</div>
+
+			<input style="display:none;" class="reset" type="button" value="Reset" />
+		<div class="status"></div>
+		
+		<input name="productid" type="hidden" value="<?php echo $id_current; ?>" />
+
+		<iframe name="iframeformupload" style="display:none"></iframe>
+	</form>
+	
+</div>
+
+</div>
+
+<!--  create popup  -->
+<?php 
+$width_popup = Mage::getStoreConfig('orderupload/general/width_popup');
+$height_popup = Mage::getStoreConfig('orderupload/general/height_popup');
+?>
+<script type="text/javascript">
+<!-- Show popup form upload files -->
+function showFormUpload(id){
+win = new Window({ title: "<?php echo $this->__('Upload Files')?>", zIndex:3000, destroyOnClose: true, recenterAuto:true, resizable: false, minWidth:<?php echo $width_popup;?>,minHeight:<?php echo $height_popup;?>, minimizable: false, maximizable: false, draggable: false,
+	closeCallback:function(){
+		//get all images upload and load again
+		new Ajax.Request('<?php echo $url_getimages;?>', {
+            method: 'post',
+            //parameters: { productid: image.newname },
+            onComplete: function(req) {       
+                console.log(req.responseText);
+            	document.getElementById('list_allimages').innerHTML=req.responseText;
+            	document.getElementById('upload_files_nbm').style.display='none';
+            }
+          });
+        
+		return true;
+	}
+	});
+win.show(true);
+win.setContent(id, false, false);
+win.showCenter();
+}
+
+function removeAll(){
+	new Ajax.Request('<?php echo $url_delete_all;?>', {
+		method: 'post',
+		//parameters: { productid: image.newname },
+		onComplete: function(req) {       
+			document.getElementById('list_allimages').innerHTML=req.responseText;
+			document.getElementById('upload_files_nbm').style.display='none';
+			document.getElementById("list_allimages").scrollIntoView();
+		}
+	});
+}
+
+<?php
+	$ext_default = 'jpg|jpeg|gif|png|txt|docx|zip|exe|flv';
+	$param_extension = Mage::getStoreConfig('orderupload/general/file_extension');
+	if($param_extension) $ext_default = trim(str_replace(array(',', ', '),'|', $param_extension));
+	$size = (int)(Mage::getStoreConfig('orderupload/general/max_size'));
+?>
+var maxUploadFileSize = '<?php echo $size*1024*1024 ?>';
+$j(function($){
+	$('#formupload').magicFiles({
+		missingDescription:"Please enter descriptions for all your files.",
+		tooMany:"You are trying to add too many files. The limit is 4.",
+		maxFiles:4,
+		minFiles:1,
+		checkFile:function(file){ // checking file extension
+		/* console.log(file.size);
+		console.log(maxUploadFileSize); */
+		var extension=file.name.substring(file.name.lastIndexOf('.')+1),
+			good=extension.match(/^(<?php echo $ext_default; ?>)$/i)
+		if (!good) alert(file.name+' didn\'t allow , it was ignored')
+			
+		if(file.size > maxUploadFileSize){
+			alert("You can't upload this file because this file is too big. Max file size is: " + <?php echo $size ?> +" Mb.");
+			return false;
+		}
+		return good
+		/* return true */
+		}
+	}).on({
+		submit:function(){$(this).addClass('busy')},
+		loaded:function(){ $(this).removeClass('busy');}
+	})
+})
+	
+</script>
+
+<?php if(Mage::getStoreConfig('orderupload/general/require_upload')) { ?>
+<script type="text/javascript">
+	/* $$(".btn-cart").invoke('observe', 'click', function() {
+		//if($j("#list_allimages tbody").html() == null)alert("1 null");
+		if(typeof($j('#list_allimages tbody tr:visible').html()) == "undefined"){
+			$j( "#list_allimages" ).append( '<div style="" id="advice-required-entry-orderupload" class="validation-advice">This is a required field.</div>' );
+			//window.location.hash = '#list_allimages';
+			document.getElementById("list_allimages").scrollIntoView();
+			window.stop();
+			return false;
+		}
+	}); */
+	
+	var productAddToCartForm = new VarienForm('product_addtocart_form');
+	productAddToCartForm.submit = function(button, url) {
+
+		// do your custom validation here  
+		// eg. if (this.validator.validate() && customValidate())
+		if (this.validator.validate()) {
+			//if($j("#list_allimages tbody").html() == null)alert("1 null");
+			if(typeof($j('#list_allimages tbody tr:visible').html()) == "undefined"){
+				if( !$j( "#advice-required-entry-orderupload" ).length ) {
+					$j( "#list_allimages" ).append( '<div style="" id="advice-required-entry-orderupload" class="validation-advice">This is a required field.</div>' );
+				}
+				document.getElementById("list_allimages").scrollIntoView();
+				return;
+			}
+
+			var form = this.form;
+			var oldUrl = form.action;
+
+			if (url) {
+			   form.action = url;
+			}
+			var e = null;
+			try {
+				this.form.submit();
+			} catch (e) {
+			}
+			this.form.action = oldUrl;
+			if (e) {
+				throw e;
+			}
+
+			if (button && button != 'undefined') {
+				button.disabled = true;
+			}
+	   }        
+	}.bind(productAddToCartForm);
+
+	//"use strict";
+(function($){
+$.fn.magicFiles=function(settings){
+	var options=$.extend({},{
+		maxFiles:Infinity,
+		minFiles:0,
+		preFillDescription:false,
+		requireDescriptions:false,
+		missingDescription:"Description required.",
+		tooMany:'Too many.',
+		checkFile:function(file){
+			// ignore file.type and file.size. let anything through!
+			return true
+		},
+		description:
+			'<div class="fileDescription">\
+				<button type="button">X<\/button>\
+				<span><\/span>\
+				<textarea name="descriptions[]" rows="3" cols="35"></textarea>\
+				<b class="error"><\/b>\
+			<\/div>',
+		onLoad:function(){ // Got an upload response! 
+			//deal with contents
+			var form=$(this).closest('form')
+			var response=$(this).contents().find('body').html()
+			// $('.status',form).append( response )
+			if(response) $('.status',form).html( response )
+			//clean up form
+			$('.reset',form).click()
+			form.trigger('loaded',[response])
+		},
+		onSubmit:function(e){
+			var error=false,
+				descs=$('.fileDescription textarea',this)
+			if (options.requireDescriptions)
+				descs.each(function(descriptionNumber){
+					var v=$(this).val(),
+						bad=v.length==0 || v.match(/^\s*$/)!=null
+					$(this).toggleClass('required',bad)
+					$(this).siblings('.error').text(bad?options.missingDescription:'')
+					if (descriptionNumber+1>options.maxFiles){
+						bad=true
+						$(this).siblings('.error').text(options.tooMany)
+					}
+					if (bad) error=true
+				})
+			if(!error) // cleanup the empty file.
+				$('[type=file]:last',this).attr('disabled','disabled')
+			return !error
+		}
+	},settings)
+	return this.each(function(){
+		var form=$(this)
+		form.on('change','[type=file]',function(evt){
+			var e=evt.originalEvent,
+				label=$(this).closest('label'),
+				good=true,
+				files=this.files;
+			if (!(files && files.length)){
+				files=[{ // non-html5 kludge
+					name:$(this).val().replace(/^.*\\([^\\]*$)/,"$1"),
+					size:1,
+					type:"unknown/fileType"
+				}]
+			}
+			$.each(files,function(i,file){
+				if (!options.checkFile(file)) good=false
+			})
+			if(!good) {
+				$(this).val('')
+			}else{
+				$('[type=submit]',form).removeAttr('disabled')
+				$.each(files,function(i,file){
+					$(options.description)
+						.appendTo($('.descriptions',form))
+						.find('input').val(options.preFillDescription?file.name:'')
+						.end()
+						.find('span').text(file.name)
+						.end()
+						.find('.error').text(
+							$('.fileDescription',form).length>options.maxFiles?options.tooMany:''
+						)
+				})
+				label.clone().insertAfter(label.hide())
+			}
+		})
+		.on('click','.fileDescription button',function(evt){
+			var index=$('.fileDescription button').index(this)
+			$(this).closest('div.fileDescription').remove()
+			$('[type=file]',form).closest('label.file').eq(index).remove()
+			if ($('.fileDescription',form).length<options.minFiles)
+				$('[type=submit]',form).attr('disabled','disabled')
+			return false
+		})
+		.submit(options.onSubmit)
+		if (options.minFiles>0)
+			$('[type=submit]',form).attr('disabled','disabled')
+		$('.reset',form).click(function(){
+			$('.descriptions',form).empty()
+			$('[type=file]',form).slice(0,-1).closest('label.file').remove()
+			$('[type=file]',form).removeAttr('disabled').show()
+			form[0].reset()
+			if (options.minFiles>0)
+				$('[type=submit]',form).attr('disabled','disabled')
+			return false
+		})
+		$('iframe',form).load(options.onLoad)
+	})
+}
+
+})(jQuery);
+jQuery(document).ready(function(){
+	jQuery('.box_upload a.show_upload').click(function(){
+		// alert(123);
+		jQuery('#upload_files_nbm div.status').html(jQuery('#list_allimages').html());
+	})
+});
+</script>
+<?php }?>
+
+</div>
+<?php } ?>

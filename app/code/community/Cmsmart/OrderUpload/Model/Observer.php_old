@@ -1,0 +1,129 @@
+<?php
+
+    class Cmsmart_OrderUpload_Model_Observer
+    {
+        public function check()
+        {
+        	//echo 'yefa';exit();
+        }
+
+        public function runThisAfterSaveOrder(Varien_Event_Observer $observer)
+        {
+        	//$order_id=Mage::getSingleton('checkout/session')->getLastRealOrderId();
+        	/*
+        	$orders = Mage::getModel('sales/order')->getCollection()
+        	->setOrder('created_at','DESC')
+        	->setPageSize()
+        	->setCurPage();
+        	$orderId = $orders->getFirstItem()->getEntityId();
+        	*/
+        	// get order id
+        	$orderId = Mage::getModel("sales/order")->getCollection()->getLastItem()->getIncrementId();
+        	
+        	// get products by order id
+        	$order = Mage::getModel('sales/order')-> loadByIncrementID($orderId);
+        	$orderItems = $order->getAllVisibleItems();
+        	
+        	// get info session products
+        	$obj_getcolect=Mage::getSingleton('core/session')->getObjProducts();
+        	$productItems=$obj_getcolect->getItems();
+        	
+        	
+        	// filter producid and images then save in file json
+        	foreach($orderItems as $orderItem)
+        	{
+        		$productid=$orderItem->getProductId();
+        		
+        		// array files of orderId
+        		$arr_=array();
+        		
+				 $i=0;       	
+        		foreach($productItems as $productItem=>$item)
+        		{
+        			
+        			$data_item=$item->getData();
+        			// Zend_Debug::dump($data_item);exit();
+        			// Zend_Debug::dump($data['set_product_id']);exit();
+        			if($productid == intval($data_item['set_product_id']))
+        			{
+        				$file=Mage::getBaseUrl('media').'tmp/orderupload'.$data_item['set_files']['file'];
+        				// save file in array
+        				$arr_[$i]['image']=$file;
+        				
+        				// save comments and label in array
+        				$arr_[$i]['label']=$data_item['set_files']['label'];
+        				$arr_[$i]['comment']=$data_item['set_comment'];
+        				
+        				// remove item collection if save cart done
+        				$obj_getcolect->removeItemByKey($productItem);
+        				
+        				$i++;
+        			}
+        		}
+        		
+        		// save files of order in file .json
+        		if(!empty($arr_))
+        		{
+        			$path=Mage::getBaseDir('media').DS.'tmp'.DS.'orderupload'.DS.$productid.DS;
+        			// create new file orderid.json
+        			$this->_createNewFileJson($orderId,$arr_,$path);
+        			
+        			//Zend_Debug::dump($arr_);exit();
+        		}
+        		
+        		
+        	}
+        	
+        	
+        	
+        	// remove all item in collection
+        	//$obj_getcolect->clear();
+        	//Zend_Debug::dump($orderId);exit();
+        	
+        	
+        	return $this;
+        }
+        
+        public function _createNewFileJson($orderId,$arr_,$path,$extra='')
+        {
+        	// read files
+        	/*
+        	 $ioAdapter = new Varien_Io_File();
+                if (!$ioAdapter->fileExists($file)) {
+                    Mage::throwException(Mage::helper('core')->__('File not found'));
+                }
+                $ioAdapter->open(array('path' => $ioAdapter->dirname($file)));
+                $ioAdapter->streamOpen($file, 'r');
+                while ($buffer = $ioAdapter->streamRead()) {
+                    print $buffer;
+                }
+                $ioAdapter->streamClose();
+                if (!empty($content['rm'])) {
+                    $ioAdapter->rm($file);
+                }
+        	 */
+        	
+        	// convert array to json
+        	$str_json=json_encode($arr_);
+        	
+        	$io = new Varien_Io_File();
+        	
+        	//$path = Mage::getBaseDir('media').DS.'tmp'.DS.'orderupload'.DS;
+        	$name = $orderId.$extra;
+        	$file = $path . DS . $name . '.json';
+        	
+        	$io->setAllowCreateFolders(true);
+        	$io->open(array('path' => $path));
+        	$io->streamOpen($file, 'w+');
+        	$io->streamLock(true);
+        	$io->streamWrite($str_json);
+        	
+        	$io->streamUnlock();
+        	$io->streamClose();
+        	
+        	
+        }
+        
+       
+        
+    }

@@ -1,0 +1,11 @@
+<div class="block">
+    <div class="block-title"><strong><span>Contact Information</span></strong></div>
+    <div class="block-content">
+        <ul class="contact-info">
+            <li><i class="icon-location">&nbsp;</i><p><b>Address:</b><br/>Jebel Ali Free Zone<br> P.O Box: 17634 Dubai - UAE</p></li>
+            <li><i class="icon-phone">&nbsp;</i><p><b>Phone:</b><br/>+ 971 4 881 7831</p></li>
+            <li><i class="icon-mail">&nbsp;</i><p><b>Email:</b><br/><a href="mailto:info@clicknprint.ae">info@clicknprint.ae</a></p></li>
+           <!-- <li><i class="icon-clock">&nbsp;</i><p><b>Working Days/Hours:</b><br/>Sat - Thurs / 9:00AM - 6:00PM</p></li>-->
+        </ul>
+    </div>
+</div>

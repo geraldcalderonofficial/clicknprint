@@ -1,0 +1,300 @@
+<?php
+$_product = $this->getProduct(); 
+$_helper = $this->helper('catalog/output');
+?>
+<div class="editorRightC">
+    <div id="stickyfloat" class="stickyfloat">
+		<div class="new-stickyfloat">
+		<div class="title">
+			<?php echo $this->__('Summary');?> 
+		</div>
+		<?php if(Mage::getStoreConfig('selectedoptionssummary/general/image') == '1') : ?>
+		<div class="images">
+			<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" />
+			<br/>
+		</div>
+		<div class="prdouct-name">
+			<b><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></b>
+		</div>
+		<?php endif; ?>
+			<?php $options =  $this->getLayout()->createBlock('bundle/catalog_product_view_type_bundle')->getOptions() ?>
+		<div class="options">
+			<?php foreach($options as $_option):?>
+				<div class="seperator">
+				<div class="extra_color" id="extra_color_<?php echo $_option->getId();?>"><?php echo "<b><strong>".$_option->getTitle().':</b></strong>';?></div>
+				<div id="extra_qty<?php echo $_option->getId();?>" class="qtys-option">
+				</div>
+				<div id="extra_<?php echo $_option->getId();?>" class="options-text <?php if(in_array($_option->getType(),array('multi','checkbox'))):?> options-left<?php endif;?>">
+				<?php $flag =false;?>
+				<?php $newflag = false;?>
+			   <?php if(count($_option->getSelections()) ==1):?>
+					<?php $newflag =1;?>
+			   <?php endif;?>
+				<?php foreach($_option->getSelections() as $_selection):?>
+					<?php if($_selection->getIsDefault() ==1 || ($newflag == 1  && $_option->getRequired() ==1)):?>
+						<?php $flag =true;?>
+						<?php //echo $_selection->getName();?>
+						<div class="selected-option selected-options-value">
+						<?php //echo $_selection->getSelectionQty()*1 . ' x ';?>
+						<?php echo $this->getLayout()->createBlock('selectedoptionssummary/selectedoptions')->getOptionDescription($_selection, true); ?>
+						</div>
+						<?php echo "<br/>";?>
+					<?php endif;?>
+				<?php endforeach;?>
+				<?php if($flag == false):?>
+					<div class="selected-option selected-options-value <?php if(in_array($_option->getType(),array('multi','checkbox'))):?> options-right<?php endif;?>"><?php echo $this->__('None');?></div>
+ 
+				<?php endif;?>
+				</div>
+				</div>
+				
+				<div class="seperator-second">
+				
+				</div>
+				<p>&nbsp;<br /></p>
+			<?php endforeach;?>
+		</div>
+			<br/>
+		</div>
+			<div class="product-options-bottom">
+			<p><?php echo $this->__('Total Price:');?><span id="price-right"></span></p>
+			<?php $buttonTitle = $this->__('Add to Cart'); ?>
+			<?php if($_product->isSaleable()): ?>
+				<div class="add-to-cart">
+					<?php if(!$_product->isGrouped()): ?>
+						<label for="qty"><?php echo $this->__('Qty:') ?></label>
+						<input type="text" name="qty_right" id="qty_right" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty"/>
+						<?php endif; ?>
+					<?php
+						$buttonText = $this->__('Add to Cart');
+						$action = Mage::app()->getRequest()->getActionName();
+						if($action=='configure'){
+							$buttonText = $this->__('Update Cart');
+						}
+					?>
+					<button type="button" title="<?php echo $buttonText; ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+						<span><span>
+							<?php echo $buttonText; ?>
+						</span></span>
+					</button>
+				</div>
+			<?php endif; ?>
+			</div>
+
+	</div>
+</div>
+<script>
+	$('qty_right').observe('change', function(event) {
+			$('qty').value = $('qty_right').value;
+	});
+	$('qty').observe('change', function(event) {
+			$('qty_right').value = $('qty').value;
+	});
+	jQuery.fn.stickyfloat = function(options, lockBottom) {
+
+		        var obj = this;
+		        var floaty = obj.offset().top;
+                var footery = jQuery('.footer-container').offset().top;
+			    var startOffset = obj.parent().offset().top;
+			    var parentPaddingTop = startOffset - obj.parent().parent().offset().top;
+			    var opts = jQuery.extend({ startOffset: startOffset, offsetY: parentPaddingTop, duration: 200, lockBottom:true }, options);
+			    var originalWidth = obj.width();
+
+			    if(opts.lockBottom) {
+				    var bottomPos = footery - (obj.outerHeight() + floaty + 14 + startOffset); //get the maximum scrollTop value
+				    if (bottomPos < 0) {
+				        bottomPos = 0;
+				    }
+			    }
+			    
+			    if(bottomPos > obj.outerHeight()) {
+					
+			        obj.css('width', originalWidth + 'px');
+			        obj.css({ position: 'absolute', top : parentPaddingTop+ 'px'});
+
+			        function updateFloat() {
+			            
+			            obj.stop(); // stop all calculations on scroll event
+			            var scrollTop = jQuery(document).scrollTop();
+			            
+				        var footery = jQuery('.footer-container').offset().top;
+				        if(opts.lockBottom){
+				            var bottomPos = footery - (obj.outerHeight() + floaty + 14); //get the maximum scrollTop value
+				            if( bottomPos < 0 )
+					            bottomPos = 0;
+			            }
+
+				        var pastStartOffset			= scrollTop > opts.startOffset;	// check if the window was scrolled down more than the start offset declared.
+				        var objFartherThanTopPos	= obj.offset().top > startOffset;	// check if the object is at it's top position (starting point)
+				        var objBiggerThanWindow 	= obj.outerHeight() < jQuery(window).height();	// if the window size is smaller than the Obj size, then do not animate.
+
+				        // if window scrolled down more than startOffset OR obj position is greater than
+				        // the top position possible (+ offsetY) AND window size must be bigger than Obj size
+				        // if( (pastStartOffset || objFartherThanTopPos) && objBiggerThanWindow )
+				        if((pastStartOffset || objFartherThanTopPos)) {
+			            
+					        var newpos = ((scrollTop - startOffset) + parentPaddingTop);
+					        if (newpos > ((bottomPos + 14) + parentPaddingTop)) {
+						        newpos = bottomPos + parentPaddingTop;
+					        }
+					        if ( scrollTop < (parentPaddingTop - 14)) {// if window scrolled < starting offset, then reset Obj position (opts.offsetY);
+						        newpos = parentPaddingTop - 14;
+		                    }
+		                    if(newpos < parentPaddingTop) {
+		                        newpos = parentPaddingTop - 14;
+	                        }
+		                    
+					        obj.animate({ top: newpos }, opts.duration );
+				        }
+                    }
+                    
+                    if(window.location.hash) {
+                        updateFloat();
+                    }
+
+	                jQuery(window).scroll(function () {
+	                    updateFloat();
+                    });
+                }
+		    };
+		
+		    jQuery(document).ready(function() {
+		        jQuery('.stickyfloat').stickyfloat({ duration: 400 });
+				
+            });
+</script>
+
+<style>
+	.editorRightC { position:relative;}
+	.editorRightC .title { border-bottom: 1px solid #e6e6e6;color: #5a5a5a;font-size: 14px;font-weight: normal;padding: 0 0 5px 5px;}
+	.editorRightC .title h2 { color: #5a5a5a;}
+	.editorRightC .images { text-align:center; margin-top:10px; border-bottom:1px solid #CACACA; padding-bottom:10px;}
+	.editorRightC .prdouct-name { margin-top:6px;}
+	.editorRightC .options { font-size:11px;}
+	.new-stickyfloat  {  padding:10px 13px !important; }
+	.stickyfloat {-webkit-box-shadow:0px 0px 5px #999; -moz-box-shadow:0px 0px 5px #999; box-shadow:0px 0px 5px #999; background:#f6f6f6; float:left;}
+	<?php /*.qtys-option,.selected-options-value{ padding-left:21px; background:url('<?php echo $this->getSkinUrl('images/check-arw.png');?>'); background-repeat:no-repeat; clear:both; float:left;}*/?>
+	.qtys-option { float :left; padding-left:7%; }
+	.options-text { float: right;width: 80%;}
+	.extra_color { clear:both;}
+	.editorRightC .product-options-bottom {border-top:1px solid #e4e4e4; clear:both; margin-top:10px; }
+	.options-left { width:95% !important; }
+	.seperator { }
+	.seperator-second { background: url('<?php echo $this->getSkinUrl('images/bkg_divider1.gif');?>') repeat-x bottom; height:1px; float:left; width:100%;}
+	.options-right { margin-left:25px;}
+	.editorRightC .add-to-cart .qty { margin-right: 2px;}
+
+</style>
+<script>
+Product.Bundle.addMethods({
+	 changeSelection: function(selection){
+		
+		var parts = selection.id.split('-');
+		
+        if (this.config['options'][parts[2]].isMulti) {
+            selected = new Array();
+			
+            if (selection.tagName == 'SELECT') {
+				var str ='';
+                for (var i = 0; i < selection.options.length; i++) {
+                    if (selection.options[i].selected && selection.options[i].value != '') {
+						
+                        selected.push(selection.options[i].value);
+						var selectedText = selection.options[i].text;
+						str = str + selectedText+"<br/>";
+						
+                    }
+                }
+				if(str =='')
+				{
+					str ='None';
+				}
+				$('extra_'+parts[2]).innerHTML ="<div class='selected-option'>"+str+"</div>";
+				$('extra_'+parts[2]).style.color ='red';
+				//$('extra_color_'+parts[2]).style.color = 'red';
+				setTimeout(function(){ $('extra_'+parts[2]).style.color='#000';},1000);
+				
+            } else if (selection.tagName == 'INPUT') {
+				
+                selector = parts[0]+'-'+parts[1]+'-'+parts[2];
+                selections = $$('.'+selector);
+				var str ='';
+                for (var i = 0; i < selections.length; i++) {
+                    if (selections[i].checked && selections[i].value != '') {
+						id =selections[i].id;
+						str =str + $$('label[for="'+id+'"]').first().innerHTML +"<br/>";
+                        selected.push(selections[i].value);
+                    }
+                }
+				$('extra_'+parts[2]).innerHTML ="<div class='selected-option'>"+str+"</div>";
+				$('extra_'+parts[2]).style.color ='red';
+				//$('extra_color_'+parts[2]).style.color = 'red';
+				setTimeout(function(){ $('extra_'+parts[2]).style.color='#000';},1000);
+            }
+            this.config.selected[parts[2]] = selected;
+        } else {
+			
+            if (selection.value != '') {
+				if(selection.type == 'select-one'){
+				id =selection.id;
+				var sel = document.getElementById(''+id+'');
+				var selectedText = sel.options[sel.selectedIndex].text;
+				$('extra_'+parts[2]).innerHTML = "<div class='selected-option'>"+selectedText+"</div>";
+				$('extra_'+parts[2]).style.color = 'red';
+				setTimeout(function(){ $('extra_'+parts[2]).style.color='#000';},1000);
+				}else if(selection.type == 'radio')
+				{
+					
+					id =selection.id;
+					$('extra_'+parts[2]).innerHTML ="<div class='selected-option'>"+$$('label[for="'+id+'"]').first().innerHTML+"</div>";
+					$('extra_'+parts[2]).style.color ='red';
+				//$('extra_color_'+parts[2]).style.color = 'red';
+					setTimeout(function(){ $('extra_'+parts[2]).style.color='#000';},1000);
+				}
+                this.config.selected[parts[2]] = new Array(selection.value);
+            } else {
+				$('extra_'+parts[2]).innerHTML ="<div class='selected-option'>"+'None'+"</div>";
+				$('extra_'+parts[2]).style.color ='red';
+				//$('extra_color_'+parts[2]).style.color = 'red';
+				setTimeout(function(){ $('extra_'+parts[2]).style.color='#000';},1000);
+                this.config.selected[parts[2]] = new Array();
+            }
+            this.populateQty(parts[2], selection.value);
+        }
+        this.reloadPrice();
+		var price = $('product-price-'+'<?php echo $_product->getId();?>').innerHTML;
+		$('price-right').innerHTML = price;
+		var qty = $('bundle-option-'+parts[2]+'-qty-input').value;
+		console.log($('extra_qty'+parts[2]));
+		$('extra_qty'+parts[2]).innerHTML = qty + ' x '+ ' &nbsp;';
+	 },
+	 changeOptionQty: function (element, event) {
+        var checkQty = true;
+        if (typeof(event) != 'undefined') {
+            if (event.keyCode == 8 || event.keyCode == 46) {
+                checkQty = false;
+            }
+        }
+        if (checkQty && (Number(element.value) == 0 || isNaN(Number(element.value)))) {
+            element.value = 1;
+        }
+        parts = element.id.split('-');
+        optionId = parts[2];
+		
+        if (!this.config['options'][optionId].isMulti) {
+            selectionId = this.config.selected[optionId][0];
+            this.config.options[optionId].selections[selectionId].qty = element.value*1;
+            this.reloadPrice();
+        }
+		$('extra_qty'+parts[2]).innerHTML = element.value + ' x' + '&nbsp;';
+		var price = $('product-price-'+'<?php echo $_product->getId();?>').innerHTML;
+		$('price-right').innerHTML = price;
+    }
+});
+
+document.observe("dom:loaded", function() {
+				var price = $('product-price-'+'<?php echo $_product->getId();?>').innerHTML;
+				$('price-right').innerHTML = price;
+});
+</script>
+

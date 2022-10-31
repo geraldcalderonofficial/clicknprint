@@ -1,0 +1,13 @@
+<div id="dg-config-art" class="modal fade nbdesigner_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-bottom: 15px;">
+                <b><?php echo $this->__("SVG Path Manager") ?></b>
+                <button style="margin-top: 0;" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>	
+            </div>   
+            <div class="modal-body nbdesigner_config_svg">
+               <input readonly="true"  data-jscolor="{zIndex: 9999}" disabled class="jscolor shadow hover-shadow" ng-repeat="color in editable.paths " ng-model="pathColor[color.key]" ng-change="updatePathColor(color)" ng-style="{'background-color': getColorCode(color.fill)}" path-art-directive>                    
+            </div>
+        </div>
+    </div>
+</div>

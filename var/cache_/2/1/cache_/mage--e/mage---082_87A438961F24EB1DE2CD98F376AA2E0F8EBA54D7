@@ -1,0 +1,37 @@
+<form id="search_mini_form" action="//clicknprint.ae/index.php/catalogsearch/result/" method="get">
+    <div class="form-search ">
+        <label for="search">Search:</label>
+                <input id="search" type="text" name="q" class="input-text" />
+                <select id="cat" name="cat">
+            <option value="">All Categories</option>
+                            <option value="71">Canvas</option>
+                                                            <option value="101">- Standard Canvas</option>
+                                            <option value="102">- Wall Design</option>
+                                            <option value="140">- Rolled Canvas</option>
+                                                                <option value="109">Displays</option>
+                                                            <option value="110">- FSU (Free Standing Units)</option>
+                                            <option value="112">- Dump Bins</option>
+                                            <option value="125">- Totems</option>
+                                            <option value="116">- Counter Units</option>
+                                            <option value="126">- Leaflet Holders</option>
+                                            <option value="127">- Tent Cards</option>
+                                                                <option value="128">Roll ups & Popups</option>
+                                                            <option value="135">- Roll Up</option>
+                                            <option value="136">- X Banner</option>
+                                            <option value="137">- Popup</option>
+                                            <option value="138">- Promotion Table</option>
+                                                                <option value="120">Rigid Media</option>
+                                                            <option value="130">- Corrugated Plastic</option>
+                                            <option value="131">- Cardboard</option>
+                                            <option value="132">- Forex</option>
+                                            <option value="133">- Foam Board</option>
+                                                                <option value="121">Banners</option>
+                                                                                <option value="122">Adhesive PVC</option>
+                                                                                <option value="139">Magnetic Sheeting</option>
+                                                                                <option value="129">Bespoke</option>
+                                                                        </select>
+                <button type="submit" title="Search" class="button"><i class="icon-search"></i></button>
+        <div id="search_autocomplete" class="search-autocomplete"></div>
+        <div class="clearer"></div>
+    </div>
+</form>

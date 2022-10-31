@@ -1,0 +1,28 @@
+<?php
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+
+?>
+
+<?php
+$product = Mage::registry('current_product');
+$productId = $product->getId();
+
+$matrixCollection = Mage::getModel('cmsmart_pricematrix/matrix')
+    ->getCollection()
+    ->addFieldToFilter('product', array('eq'=>$productId));
+
+foreach($matrixCollection as $matrix){
+?>
+    <div id="matrix-result">
+<?php
+    echo json_decode($matrix->getValue());
+?>
+    </div>
+<?php
+}
+?>
+

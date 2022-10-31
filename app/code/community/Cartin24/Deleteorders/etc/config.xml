@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Cartin24_Deleteorders>
+            <version>1.0.0</version>
+        </Cartin24_Deleteorders>
+    </modules>
+    <admin>
+        <routers>
+			<adminhtml>
+			<args>
+			  <modules>
+				<cartin24_deleteorders after="Mage_Adminhtml">Cartin24_Deleteorders_Adminhtml</cartin24_deleteorders>
+			  </modules>
+			</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Cartin24_Deleteorders>
+							<title>Delete Orders Module</title>
+							<sort_order>10</sort_order>
+						</Cartin24_Deleteorders>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+    </adminhtml>   
+    <global>
+        <blocks>
+	 		<adminhtml>
+            <rewrite>
+                <sales_order_grid>Cartin24_Deleteorders_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+            </rewrite>		 
+           <rewrite>
+                <sales_order_view>Cartin24_Deleteorders_Block_Adminhtml_Sales_Order_View</sales_order_view>
+            </rewrite>
+         </adminhtml>
+            <deleteorders>
+                <class>Cartin24_Deleteorders_Block</class>
+            </deleteorders>
+        </blocks>
+        <helpers>
+            <deleteorders>
+                <class>Cartin24_Deleteorders_Helper</class>
+            </deleteorders>
+        </helpers>
+    </global>
+</config>

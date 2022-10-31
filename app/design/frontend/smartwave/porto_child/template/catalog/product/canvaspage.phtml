@@ -1,0 +1,88 @@
+
+
+
+
+
+<div class="category-products">
+    
+    <ol class="products-list" id="products-list">
+        <li class="item"><div class="item-area">
+                <div class="product-image-area">
+                    <a href="#" title="" class="product-image">
+                        <img id="product-collection-image-" class="defaultImage" src="" alt=""/>
+                          <img src="{{media url="catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/t/n/tn2_3_18.jpg"}}" alt="" />
+                        <img class="hoverImage" src="" alt=""/>
+                   
+                        <img id="product-collection-image-"/>
+                   
+                            <div class="deal-label">
+                                <i class="icon-clock"></i>
+                            </div>
+                            <div class="bottom-product-dailydeal bottom-home-dailydeal">
+                                <ul class="time-left">
+                                    <div class="timeleft timeleft_"> </div>
+                                </ul>
+                            </div>
+                            
+                            
+                    
+                    
+                </div>
+                <div class="details-area">
+                    <h2 class="product-name"><a href="" title="">Canvas</a></h2>
+                    
+				
+                    <div class="short-desc">
+                        
+                    </div>
+                    <div class="action-area">
+                    
+                        <div class="actions">
+                            <div class="loader-container">
+                                <div class="loader">
+                                    <i class="ajax-loader medium animate-spin"></i>
+                                </div>
+                            </div>
+                        
+                                
+                                
+                            
+                                    
+                            
+                            
+                            <div class="clearer"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="clearer"></div>
+            </div></li>
+    
+    </ol>
+    <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+    
+        <script type="text/javascript">
+            jQuery('.col-main .products-grid li:nth-child(2n)').addClass('nth-child-2n');
+            jQuery('.col-main .products-grid li:nth-child(2n+1)').addClass('nth-child-2np1');
+            jQuery('.col-main .products-grid li:nth-child(3n)').addClass('nth-child-3n');
+            jQuery('.col-main .products-grid li:nth-child(3n+1)').addClass('nth-child-3np1');
+            jQuery('.col-main .products-grid li:nth-child(4n)').addClass('nth-child-4n');
+            jQuery('.col-main .products-grid li:nth-child(4n+1)').addClass('nth-child-4np1');
+            jQuery('.col-main .products-grid li:nth-child(5n)').addClass('nth-child-5n');
+            jQuery('.col-main .products-grid li:nth-child(5n+1)').addClass('nth-child-5np1');
+            jQuery('.col-main .products-grid li:nth-child(6n)').addClass('nth-child-6n');
+            jQuery('.col-main .products-grid li:nth-child(6n+1)').addClass('nth-child-6np1');
+            jQuery('.col-main .products-grid li:nth-child(7n)').addClass('nth-child-7n');
+            jQuery('.col-main .products-grid li:nth-child(7n+1)').addClass('nth-child-7np1');
+            jQuery('.col-main .products-grid li:nth-child(8n)').addClass('nth-child-8n');
+            jQuery('.col-main .products-grid li:nth-child(8n+1)').addClass('nth-child-8np1');
+        </script>
+    <?php endif; ?>
+    <?php if(Mage::getStoreConfig("ajax_catalog/price_slider_settings/infinitescroll", $code)): ?>
+    <div class="infinite-loader"><span class="loading"><i class="ajax-loader small animate-spin"></i><?php echo $this->__("Loading ..."); ?></span><a href="javascript:void(0)" class="btn-load-more"><?php echo $this->__("Load More ..."); ?></a></div>
+    <?php endif; ?>
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+</div>

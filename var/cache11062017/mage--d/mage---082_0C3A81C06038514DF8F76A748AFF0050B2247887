@@ -1,0 +1,115 @@
+<style>
+.owl-bottom-narrow .owl-controls {
+	position: absolute;
+	bottom:10px;
+	margin: 0;
+	width: 100%;
+}
+
+.category-products .products-grid li.item .details-area .product-name {
+      margin: 0 0 3px 0;
+      padding: 0 25px;  
+}
+
+.sam {
+      margin: 0 0 3px 0;
+      padding: 0 34px;  
+}
+
+</style>
+
+
+
+<div class="owl-bottom-narrow owl-banner-carousel" style="margin-bottom: 20px;">
+<div id="banner-slider-demo-6" class="owl-carousel owl-theme">
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/rocaslider02.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/rocaslider01.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/rocaslider03.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/rocaslider04.jpg" /></div>
+		
+</div>
+
+<script type="text/javascript">// <![CDATA[
+jQuery(function($){
+                
+$("#banner-slider-demo-6").owlCarousel({
+
+autoPlay:true,
+		lazyLoad: true,
+                    slideSpeed : 5000,
+                    paginationSpeed : 300,
+                    singleItem:true,
+                    responsiveRefreshRate: 50,
+                    slideSpeed: 5000,
+                    paginationSpeed: 400,
+                    stopOnHover: false,
+                    rewindNav: true,
+                    rewindSpeed: 500,
+                    navigation: false
+
+});
+            });
+// ]]></script>
+
+</div>
+
+<br>
+
+
+<div class="category-products">
+	<ul class="products-grid  columns4">  
+                    <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                         
+<a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-5/rolled-canvas.html" title="Rolled Canvas" class="product-image">
+                                            <img id="product-collection-image-241" class="defaultImage" src="https://clicknprint.ae/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/r/o/rolled.jpg" alt="Rolled Canvas">
+                        <img class="hoverImage" src="https://clicknprint.ae/media/catalog/product/cache/1/thumbnail/300x/17f82f742ffe127f42dca9de82fb58b1/r/o/rolled_canvas_sub_category-01.jpg" alt="Rolled Canvas">
+                                                                                                        </a>
+
+    <!-- <a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-1/rolled-canvas.html" title="Rolled Canvas" class="product-image">
+                                                              <img  src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/rolled.jpg" alt="Rolled Canvas"></a>-->
+                                             </div>
+
+
+
+<div class="details-area">
+                    <h2 class="product-name"><a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-5/rolled-canvas.html" title="Rolled Canvas">Rolled Canvas</a></h2>
+                    					                                           <!-- <div class="ratings">
+                            <div class="rating-box">
+                                <div class="rating" style="width:0"></div>
+			</div>
+						</div>-->
+					                                        					                                        
+<div class="price-box">
+											<span class="price">Starting AED95 per <br>square meter</span>                  
+
+										</div>
+
+                                                            <div class="actions">
+                                                                        <a href="https://clicknprint.ae/index.php/wishlist/index/add/product/241/form_key/khllZr5Qfg6IVwzj/" class="addtowishlist" title="Add to Wishlist"><i class="icon-wishlist"></i></a>
+                                                                                                            <a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-5/rolled-canvas.html" class="addtocart" title="Add to Cart"><i class="icon-cart"></i><span>&nbsp;Add to Cart</span></a>
+                                <a href="https://clicknprint.ae/index.php/ajaxcart/index/options/product_id/241/" class="fancybox" id="fancybox241" style="display:none">Options</a>
+                                                                                                        <a href="https://clicknprint.ae/index.php/catalog/product_compare/add/product/241/uenc/aHR0cHM6Ly9jbGlja25wcmludC5hZS9pbmRleC5waHAvY2FudmFzL3JvbGxlZC1jYW52YXMtNS5odG1s/form_key/khllZr5Qfg6IVwzj/" class="comparelink" title="Add to Compare"><i class="icon-compare"></i></a>
+                                                <div class="clearer"></div>
+                    </div>
+                                    </div>
+                        
+
+                                           <!-- <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-1/rolled-canvas.html" title="Rolled Canvas">Rolled Canvas</a></h2>
+                                                              <p class="sam">Starting AED95 per square meter</p>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>    -->                            
+                                  </div>
+                    </li>
+
+                
+                     
+
+
+        </ul>
+</div>
+

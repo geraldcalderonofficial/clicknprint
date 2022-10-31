@@ -1,0 +1,107 @@
+<layout>
+
+
+
+    <default>
+
+        <reference name="head">
+
+            <action method="addJs"><script>cmsmart/pricematrix/jquery-1.11.1.min.js</script></action>
+
+            <action method="addJs"><script>cmsmart/pricematrix/jqueryui-1.11.1.js</script></action>
+
+            <action method="addJs"><script>cmsmart/pricematrix/jquery-migrate-1.2.1.min.js</script></action>
+
+            <action method="addJs"><script>cmsmart/pricematrix/jquery-noconflict.js</script></action>
+
+            <action method="addJs"><script>cmsmart/pricematrix/jquery.sortable.min.js</script></action>
+
+            <action method="addCss"><name>cmsmart/pricematrix/styles.css</name></action>
+
+            <action method="addCss"><stylesheet>cmsmart/pricematrix/jqueryui-1.11.1.css</stylesheet></action>
+
+            <action method="addJs"><script>cmsmart/pricematrix/scroll/prettify.js</script></action>
+
+            <action method="addJs"><script>cmsmart/pricematrix/scroll/jquery.slimscroll.js</script></action>
+
+            <action method="addCss"><stylesheet>cmsmart/pricematrix/scroll/prettify.css</stylesheet></action>
+
+            <action method="addJs"><script>cmsmart/pricematrix/adminhtml.js</script></action>
+
+            <!-- <action method="addJs"><script>cmsmart/pricematrix/license.js</script></action> -->
+
+        </reference>
+
+    </default>
+
+
+
+    <!--<adminhtml_catalog_product_edit>-->
+
+        <!--<reference name="head">-->
+
+            <!--<action method="addJs"><script>cmsmart/jquery-1.11.1.min.js</script></action>-->
+
+            <!--<action method="addJs"><script>cmsmart/jqueryui-1.11.1.js</script></action>-->
+
+            <!--<action method="addJs"><script>cmsmart/jquery-migrate-1.2.1.min.js</script></action>-->
+
+            <!--<action method="addJs"><script>cmsmart/jquery-noconflict.js</script></action>-->
+
+            <!--<action method="addJs"><script>cmsmart/jquery.sortable.min.js</script></action>-->
+
+            <!--<action method="addCss"><name>cmsmart/styles.css</name></action>-->
+
+            <!--<action method="addCss"><stylesheet>cmsmart/jqueryui-1.11.1.css</stylesheet></action>-->
+
+            <!--<action method="addJs"><script>cmsmart/scroll/prettify.js</script></action>-->
+
+            <!--<action method="addJs"><script>cmsmart/scroll/jquery.slimscroll.js</script></action>-->
+
+            <!--<action method="addCss"><stylesheet>cmsmart/scroll/prettify.css</stylesheet></action>-->
+
+            <!--<action method="addJs"><script>cmsmart/adminhtml.js</script></action>-->
+
+        <!--</reference>-->
+
+    <!--</adminhtml_catalog_product_edit>-->
+
+
+
+    <adminhtml_system_config_edit>
+
+        <reference name="head">
+
+            <action method="addJs">
+
+                <file>jscolor/jscolor.js</file>
+
+            </action>
+
+        </reference>
+
+    </adminhtml_system_config_edit>
+
+
+
+    <adminhtml_catalog_product_pricematrix>
+
+        <block type="core/text_list" name="root" output="toHtml">
+
+            <block type="cmsmart_pricematrix/adminhtml_catalog_product_edit_tab_pricematrix" name="catalog.product.edit.tab.pricematrix">
+
+                <block type="cmsmart_pricematrix/adminhtml_catalog_product_edit_tab_pricematrix_attributes"
+
+                       name="catalog.product.edit.tab.pricematrix.attributes"
+
+                       as="catalog_product_edit_tab_pricematrix_attributes"
+
+                       template="cmsmart/pricematrix/catalog/product/edit/tab/pricematrix/attributes.phtml" />
+
+            </block>
+
+        </block>
+
+    </adminhtml_catalog_product_pricematrix>
+
+</layout>

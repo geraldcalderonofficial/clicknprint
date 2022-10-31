@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @author Amasty Team
+* @copyright Copyright (c) 2008-2012 Amasty (http://www.amasty.com)
+* @package Cmsmart_OrderUpload
+*/
+-->
+<config>
+    <modules>
+        <Cmsmart_OrderUpload>
+            <version>1.0.0</version>
+        </Cmsmart_OrderUpload>
+    </modules>
+    <global>
+        <models>
+            <orderupload>
+                <class>Cmsmart_OrderUpload_Model</class>
+            </orderupload>
+        </models>
+		
+        <resources>
+            <orderupload_setup>
+                <setup>
+                    <module>Cmsmart_OrderUpload</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </orderupload_setup>
+            
+            <orderupload_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </orderupload_write>
+            
+            <orderupload_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </orderupload_read>
+        </resources>
+		
+        <blocks>
+            <orderupload>
+                <class>Cmsmart_OrderUpload_Block</class>
+            </orderupload>
+			<!--
+			<adminhtml>
+				<rewrite>
+        			<catalog_product_attribute_edit_tab_main>Cmsmart_OrderUpload_Block_Catalog_Product_Attribut_Edit_Tab_Main</catalog_product_attribute_edit_tab_main>
+					<catalog_product_attribute_edit_tabs>Cmsmart_OrderUpload_Block_Catalog_Product_Attribut_Edit_Tabs</catalog_product_attribute_edit_tabs> 
+        		</rewrite>
+			</adminhtml>
+			-->
+			
+			<!-- Overide function show order item in adminhtml -->
+			
+			<adminhtml>
+				<rewrite>
+        			<sales_order_view_items_renderer_default>Cmsmart_OrderUpload_Block_Sales_Order_View_Items_Renderer_Default</sales_order_view_items_renderer_default> 
+        		</rewrite>
+			</adminhtml>
+			
+			<!-- Overide function addJs and addCss -->
+			<!--
+			<page>
+				<rewrite>
+					<html_head>Cmsmart_OrderUpload_Block_Page_Html_Head</html_head> 
+				</rewrite>
+			</page>
+			-->
+			
+			<!-- Overide function show attribute in product detail -->
+            <!-- <catalog>
+                <rewrite>
+        			<product_view_attributes>Cmsmart_OrderUpload_Block_Catalog_Product_View_Attributes</product_view_attributes> 
+        		</rewrite> 
+            </catalog>   -->
+            
+            <!-- Overide function show attribute in cart -->
+            <checkout>
+            	<rewrite>
+        			<cart_item_renderer>Cmsmart_OrderUpload_Block_Checkout_Cart_Item_Renderer</cart_item_renderer> 
+        		
+        			<cart_item_renderer_configurable>Cmsmart_OrderUpload_Block_Checkout_Cart_Item_Renderer_Configurable</cart_item_renderer_configurable> 
+        		
+        			<cart_item_renderer_grouped>Cmsmart_OrderUpload_Block_Checkout_Cart_Item_Renderer_Grouped</cart_item_renderer_grouped> 
+        		</rewrite> 
+            </checkout>
+            <sales>
+            	<rewrite>
+        			<order_item_renderer_default>Cmsmart_OrderUpload_Block_Sales_Order_Item_Renderer_Default</order_item_renderer_default> 
+        		
+        			<order_item_renderer_grouped>Cmsmart_OrderUpload_Block_Sales_Order_Item_Renderer_Grouped</order_item_renderer_grouped> 
+        			
+        			<order_email_items_order_default>Cmsmart_OrderUpload_Block_Sales_Order_Email_Items_Order_Default</order_email_items_order_default> 
+        		
+        			<order_email_items_order_grouped>Cmsmart_OrderUpload_Block_Sales_Order_Email_Items_Order_Grouped</order_email_items_order_grouped> 
+        		</rewrite> 
+            </sales>
+        </blocks>
+         
+        <helpers>
+            <orderupload>
+                <class>Cmsmart_OrderUpload_Helper</class>
+            </orderupload>
+			<!--
+            <catalog>
+            	<rewrite>
+            		<product_view>Cmsmart_OrderUpload_Helper_Catalog_Product_View</product_view>            		
+            	</rewrite>
+            </catalog>
+			-->
+			<catalog>
+            	<rewrite>
+            		<output>Cmsmart_OrderUpload_Helper_Catalog_Output</output>            		
+            	</rewrite>
+            </catalog>
+			           
+        </helpers>
+        
+        <!--  hook events in admin -->
+		<!--
+		<events>
+			<adminhtml_system_config_advanced_disableoutput_render_before>
+	      		<observers>
+	               <orderupload>
+	                   <type>singleton</type>
+	                   <class>orderupload/observer</class>
+	                   <method>check</method>
+	               </orderupload>
+	           </observers>
+	      	</adminhtml_system_config_advanced_disableoutput_render_before>
+		</events>
+		-->
+		
+    </global>
+	
+	<frontend>
+        <routers>
+            <orderupload>
+                <use>standard</use>
+                <args>
+                    <module>Cmsmart_OrderUpload</module>
+                    <frontName>orderupload</frontName>
+                </args>
+            </orderupload>
+        </routers>
+        <layout>
+            <updates>
+                <orderupload>
+                    <file>cmsmart/orderupload.xml</file>
+                </orderupload>
+            </updates>
+        </layout>
+		
+		
+		<events>
+			<!-- Add a block below structure content -->
+			<!--
+            <controller_action_layout_load_before>
+                <observers>
+                    <orderupload>
+                        <type>singleton</type>
+                        <class>orderupload/observer</class>
+                        <method>checkModules</method>
+                    </orderupload>
+                </observers>
+            </controller_action_layout_load_before>
+            -->
+            
+            <!-- Overide event save order  -->
+             
+           	<checkout_type_onepage_save_order_after>
+           		<observers>
+                    <orderupload>
+                        <type>singleton</type>
+                        <class>orderupload/observer</class>
+                        <method>runThisAfterSaveOrder</method>
+                    </orderupload>
+                </observers>
+           	</checkout_type_onepage_save_order_after>
+            
+            
+        </events>
+		
+        <translate>
+            <modules>
+                <CmsMart_OrderUpload>
+                    <files>
+                        <default>CmsMart_OrderUpload.csv</default>
+                    </files>
+                </CmsMart_OrderUpload>
+            </modules>
+        </translate>
+		
+    </frontend>
+	
+    <admin>
+        <routers>
+			<orderupload>
+				<use>admin</use>
+				<args>
+					<module>Cmsmart_OrderUpload</module>
+					<frontName>orderupload</frontName>
+				</args>
+			</orderupload>
+        </routers>      
+    </admin>
+	
+    <default>
+        <orderupload>
+           <general>
+		   		<attr_code>order_upload</attr_code>
+		   		<file_extension>jpg,png,txt,doc,xls</file_extension>
+		   		<width_popup>450</width_popup>
+		   		<height_popup>100</height_popup>
+		   		<max_size>2</max_size>
+		   		<!--
+                <active>1</active>
+                <title_separator> - </title_separator>
+                <descr_separator>, </descr_separator>
+                <exclude></exclude>
+                <exclude_cat></exclude_cat>
+                <show_in_stock>0</show_in_stock>
+                <use_custom_ranges>0</use_custom_ranges>
+                <categories_type>0</categories_type>
+                <price_type>0</price_type>
+                <price_from_to>1</price_from_to> 
+                <price_collapsed>0</price_collapsed> 
+                <categories_collapsed>0</categories_collapsed> 
+                <hide_one_value>0</hide_one_value>
+                <categories_order>0</categories_order>
+				<slider_type>0</slider_type>
+				<bundle>0</bundle>
+				-->
+            </general>
+			<!--
+            <block>
+                <ajax>0</ajax>
+                <state_pos>left</state_pos>
+                <categories_pos>left</categories_pos>
+                <price_pos>left</price_pos>
+            </block>
+            <seo>
+                <urls>0</urls>
+                <hide_attributes>0</hide_attributes>
+                <key>shopby</key>
+                <canonical>2</canonical>
+                <canonical_cat>1</canonical_cat>
+                <query_param></query_param>
+            </seo>
+            <brands>
+                <attr></attr>
+            </brands>
+			-->
+        </orderupload>
+    </default>
+    
+</config>

@@ -1,0 +1,29 @@
+<?php
+$product_id = Mage::registry('current_product')->getId();
+$helper = Mage::helper('onlinedesign/data');
+$status = $helper->getStatusDesign($product_id);
+
+if($status == 1) {
+	$title_btn = $helper->getDesignName();
+	if($this->getRequest()->getParam('orderid')) {
+		$title_btn = $this->__("Design Again");
+	}
+	$src = $this->getUrl('onlinedesign/index/design', array('_current'=>true));
+	?>
+	<!-- disable add to cart button -->
+	<style>
+	.product-view button.btn-cart {
+		display: none;
+	}
+	</style>
+	
+	<a id="triggerDesign" class="button"><?php echo $title_btn; ?></a><br />
+	<div id="nbdesigner_frontend_area"></div>
+
+	<div style="position: fixed; top: 0; left: 0; z-index: 999999; opacity: 0; width: 100%; height: 100%;" id="container-online-designer">
+		<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="<?php echo $src; ?>">
+		</iframe>
+		<span id="closeFrameDesign" class="nbdesigner_pp_close">&times;</span>
+	</div>
+	
+<?php } ?>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_catalog_product_edit>
+        <reference name="product_tabs">
+            <action method="addTab">
+                <name>formulacsvpricing</name>
+                <block>formulacsvpricing/adminhtml_catalog_product_tab</block>
+            </action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+	<formulacsvpricing_adminhtml_formulacsvpricing_index>
+		  <block type="core/text_list" name="root" output="toHtml">
+            <block type="adminhtml/template" name="content" template="formulacsvpricing/preview.phtml">
+            </block>
+        </block>
+	</formulacsvpricing_adminhtml_formulacsvpricing_index>
+</layout>

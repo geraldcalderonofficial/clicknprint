@@ -1,0 +1,11 @@
+a:5:{i:0;s:19:"formId is mandatory";i:1;s:1175:"#0 /home/clicknprint2/public_html/includes/src/__default.php(24564): Mage_Captcha_Model_Zend->__construct(Array)
+#1 /home/clicknprint2/public_html/app/Mage.php(463): Mage_Core_Model_Config->getModelInstance('captcha/zend', Array)
+#2 /home/clicknprint2/public_html/includes/src/Mage_Captcha_Helper_Data.php(72): Mage::getModel('captcha/zend', Array)
+#3 /home/clicknprint2/public_html/app/code/core/Mage/Captcha/controllers/RefreshController.php(45): Mage_Captcha_Helper_Data->getCaptcha(NULL)
+#4 /home/clicknprint2/public_html/includes/src/__default.php(14272): Mage_Captcha_RefreshController->indexAction()
+#5 /home/clicknprint2/public_html/includes/src/__default.php(18750): Mage_Core_Controller_Varien_Action->dispatch('index')
+#6 /home/clicknprint2/public_html/includes/src/__default.php(18280): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#7 /home/clicknprint2/public_html/includes/src/__default.php(21176): Mage_Core_Controller_Varien_Front->dispatch()
+#8 /home/clicknprint2/public_html/app/Mage.php(684): Mage_Core_Model_App->run(Array)
+#9 /home/clicknprint2/public_html/index.php(83): Mage::run('', 'store')
+#10 {main}";s:3:"url";s:27:"/index.php/captcha/refresh/";s:11:"script_name";s:10:"/index.php";s:4:"skin";s:7:"english";}

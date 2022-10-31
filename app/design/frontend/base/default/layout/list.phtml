@@ -1,0 +1,427 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+/* @var $this Mage_Catalog_Block_Product_List */
+?>
+<style type="text/css">
+.disp 
+{
+    display: none !important;
+}
+.isp_polite_powered_by_id.ui-helper-hidden-accessible {
+    display: none!important;
+}
+#acp_footer_acp{display: none!important;}
+#acp_footer_acp2,#acp_footer_cfg_007{display: none!important;}
+.highlight {
+    color: #3faf48;
+    font-style: normal;
+}
+.request-count {
+    color: gray;
+    margin-bottom: 0;
+    margin-top: 10px;
+    text-align: center;
+}
+</style>
+	<!-- Add mousewheel plugin (this is optional) -->
+	<script type="text/javascript" src="<?=Mage::getBaseUrl()?>fanlib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+	<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="<?=Mage::getBaseUrl()?>source/jquery.fancybox.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="<?=Mage::getBaseUrl()?>source/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+	<!-- Add Button helper (this is optional) -->
+	<link rel="stylesheet" type="text/css" href="<?=Mage::getBaseUrl()?>source/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+	<script type="text/javascript" src="<?=Mage::getBaseUrl()?>source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+
+	<!-- Add Thumbnail helper (this is optional) -->
+	<link rel="stylesheet" type="text/css" href="<?=Mage::getBaseUrl()?>source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
+	<script type="text/javascript" src="<?=Mage::getBaseUrl()?>source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+	<!-- Add Media helper (this is optional) -->
+	<script type="text/javascript" src="source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+<?php
+    
+    $_helper = $this->helper('catalog/output');
+    $c_url= Mage::helper('page')->full_path();
+?>
+<?php 
+if($_GET['q']==''){
+$_category = Mage::registry('current_category');
+$currentCategoryId= $_category->getId();
+?>
+<div class="freeProducts voucher code">
+    <?php
+
+    $categoryid = $currentCategoryId;
+    $key = $_GET['key'];
+    $category = new Mage_Catalog_Model_Category();
+    $category->load($categoryid);
+    
+    $coun_collection = $category->getProductCollection();
+    $coun_collection->addAttributeToSelect('*')
+    ->addAttributeToFilter('name', array('like' => "%$key%"));
+    $product_count=count($coun_collection);
+   
+    $collection = $category->getProductCollection();
+    $collection->addAttributeToSelect('*')
+    ->addAttributeToFilter('name', array('like' => "%$key%"));
+    $collection->setPageSize(12);
+    if($_GET['page']=='')
+    {
+    $c_page=1;
+    }
+    else
+    {
+    $c_page=$_GET['page'];
+    }
+    $collection->setCurPage($c_page);
+    $total_pages=ceil($product_count/12);
+    //f//oreach ($collection as $_product) { ?>
+    <?php //echo $_product->getName(); ?><br />
+    <!--<a href="<?php //echo $_product->getProductUrl() ?>"><img src="<?php //echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(200); ?>" width="200" height="200" alt="" /></a> <a href="<?php //echo $_product->getProductUrl(); ?>"><?php //echo $_product->getName(); ?></a>-->
+
+    <?php //} ?>
+    <?php 
+    }
+        if($_GET['key']=='')
+        {
+            $_productCollection=$this->getLoadedProductCollection();
+        }
+        else
+        {
+            $_productCollection=$collection;
+        }
+    ?>
+    <?php $currentUrl = $this->helper('core/url')->getCurrentUrl();?>
+</div>
+<?php if(!$_productCollection->count()): ?>
+<div id="imageCollection">
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+    <?php 
+    if($_GET['key']==''){echo $this->getToolbarHtml();}else{ ?>
+    <div class="ms_search_and_pagination">
+   	    <form class="ms_search_product_listing_search" action="<?=$_category->getUrl($_category)?>" method="get">
+           	<input onkeypress="hideOptionPhoto()" name="key" class="ms_search_pl_search_input" type="text" placeholder="Search Products"/>
+            <input class="ms_search_pl_search_button" type="submit" value=""/>
+        </form>
+        <ul class="ms_pagination">
+        <?php
+        $page   = intval($_GET['page']);
+        $tpages = $total_pages; // 20 by default
+        $adjacents  = intval($_GET['adjacents']);
+                                            
+        if($page<=0)  $page  = 1;
+        if($adjacents<=0) $adjacents = 1;
+                                            
+        $url_cu=$_category->getUrl($_category).'?key='.$_GET['key'];
+        echo Mage::helper('page')->paginate_three($url_cu, $page, $total_pages, 2);
+        ?>
+        </ul>
+    </div>
+    <?php }?>
+    <?php // List mode ?>
+    <?php if($this->getMode()!='grid'): ?>
+    <?php $_iterator = 0; ?>
+    <ol class="products-list" id="products-list">
+    <?php foreach ($_productCollection as $_product): ?>
+        <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+            <?php // Product Image ?>
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                <?php /* Based on the native RWD styling, product images are displayed at a max of ~400px wide when viewed on a
+                        one column page layout with four product columns from a 1280px viewport. For bandwidth reasons,
+                        we are going to serve a 300px image, as it will look fine at 400px and most of the times, the image
+                        will be displayed at a smaller size (eg, if two column are being used or viewport is smaller than 1280px).
+                        This $_imgSize value could even be decreased further, based on the page layout
+                        (one column, two column, three column) and number of product columns. */ ?>
+                <?php $_imgSize = 300; ?>
+                <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+                     src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize); ?>"
+                     alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+            </a>
+            <?php // Product description ?>
+            <div class="product-shop">
+                <div class="f-fix">
+                    <div class="product-primary">
+                        <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                        <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+                        <?php if($_product->getRatingSummary()): ?>
+                        <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                        <?php endif; ?>
+
+                        <?php
+                            $_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+                            foreach($_nameAfterChildren as $_nameAfterChildName):
+                                $_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+                                $_nameAfterChild->setProduct($_product);
+                        ?>
+                            <?php echo $_nameAfterChild->toHtml(); ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="product-secondary">
+                        <?php echo $this->getPriceHtml($_product, true) ?>
+                    </div>
+                    <div class="product-secondary">
+                        <?php if($_product->isSaleable() && !$_product->canConfigure()): ?>
+                            <p class="action"><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                        <?php elseif($_product->isSaleable()): ?>
+                            <p class="action"><a title="<?php echo $this->__('View Details') ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a></p>
+                        <?php else: ?>
+                            <p class="action availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                        <?php endif; ?>
+                        <ul class="add-to-links">
+                            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                            <?php endif; ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                    <div class="desc std">
+                        <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ol>
+    <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+    <?php else: ?>
+    <?php // Grid Mode ?>
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = 4; ?>
+        <?php $i=0; foreach ($_productCollection as $_product): ?>
+            <?php if ($i++%$_columnCount==0): ?>
+            <ul class="row">
+            <?php endif ?>
+            <li class="col-xs-6 col-sm-3">
+                <div class="ms_product_wrap">
+                <div class="ms_product_img_frame">
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>">                       
+                        <img id="product-collection-image-<?php echo $_product->getId(); ?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(160,148); ?>" width="160" height="148" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                    </a>
+                </div> 
+                <?php $b2b_count= Mage::helper('page')->product_b2b_type_condition($_product->getId()); ?>
+                <div class="ms_product_details">
+                    <a class="ms_product_name" href="<?php echo $_product->getProductUrl() ?>"><h2 style="font-size:13px;"><?php echo Mage::helper("page")->charector_lessing($_helper->productAttribute($_product, $_product->getName() , 'name'),40);?></h2></a>
+                    <?php if($_product->getFinalPrice()!='' and $_product->getFinalPrice()!=$_product->getPrice()){?>   
+                    <?php if($b2b_count!=1){ ?>
+                    <div class="ms_product_price_wrap">
+                        <label class="ms_product_price_old"><?php echo Mage::helper('core')->currency($_product->getPrice())?></label>
+                        <span class="ms_product_price"><?php echo Mage::helper('core')->currency($_product->getFinalPrice());?></span>
+                    </div>
+                    <?php }?>
+                    <div class="ms_product_offer_social">
+                        <?php 
+                        $pt=($_product->getFinalPrice()/$_product->getPrice())*100;
+                        $save=100-$pt;
+                        ?>
+                        <span class="ms_product_offer"><?=round($save)?>% OFF</span>
+                        <ul class="ms_product_socials">
+                            <!--<li><a class="ms_product_facebook" href="javascript:popWin('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($_product->getProductUrl()); ?>&t=<?php echo urlencode(html_entity_decode($this->escapeHtml($_product->getName()))); ?>', 'facebook', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');">f</a></li>-->
+                            <li><a class="ms_product_facebook" href="http://www.facebook.com/sharer.php?u=<?php echo urlencode($_product->getProductUrl()); ?>&t=Check+this+out" target="_blank" title="Share on Facebook">f</a></li>
+                            <li><a class="ms_product_linked_in" href="javascript:popWin('https://pinterest.com/pin/create/button/?url=<?php echo urlencode($_product->getProductUrl()); ?>&media=<?php echo urlencode($this->helper('catalog/image')->init($_product, 'thumbnail')->resize(160,148)); ?>&description=<?php echo urlencode($this->escapeHtml($_product->getName())); ?>', 'pinterest', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');">P</a></li>
+                            <li><a class="ms_product_twitter" href="javascript:popWin('http://twitter.com/home/?status=<?php echo urlencode($this->escapeHtml($_product->getName()) . ' (' . $_product->getProductUrl() . ')'); ?>', 'twitter', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');">t</a></li>
+                        </ul>
+                    </div>
+                    <?php }else{?>
+                    <?php if($b2b_count!=1){ ?>
+                    <div class="ms_product_price_wrap">
+                        
+                        <span class="ms_product_price"><?php echo Mage::helper('core')->currency($_product->getPrice())?></span>
+                    </div>
+                    <?php }else{?>
+                    <p class="request-count"><i class="highlight">(<?php echo Mage::helper('page')->get_quote_num($_product->getId()) ?>)</i>&nbsp;Received Quotes</p>
+                    <?php }?>
+                    <div class="ms_product_offer_social">
+                        <ul class="ms_product_socials">
+                            <!--<li><a class="ms_product_facebook" href="javascript:popWin('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($_product->getProductUrl()); ?>&t=<?php echo urlencode(html_entity_decode($this->escapeHtml($_product->getName()))); ?>', 'facebook', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');">f</a></li>-->
+                            
+                            <li><a class="ms_product_facebook" href="http://www.facebook.com/sharer.php?u=<?php echo urlencode($_product->getProductUrl()); ?>&t=Check+this+out" target="_blank" title="Share on Facebook">f</a></li>
+                            
+                            <li><a class="ms_product_linked_in" href="javascript:popWin('https://pinterest.com/pin/create/button/?url=<?php echo urlencode($_product->getProductUrl()); ?>&media=<?php echo urlencode($this->helper('catalog/image')->init($_product, 'thumbnail')->resize(160,148)); ?>&description=<?php echo urlencode($this->escapeHtml($_product->getName())); ?>', 'pinterest', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');">P</a></li>
+                            <li><a class="ms_product_twitter" href="javascript:popWin('http://twitter.com/home/?status=<?php echo urlencode($this->escapeHtml($_product->getName()) . ' (' . $_product->getProductUrl() . ')'); ?>', 'twitter', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');">t</a></li>
+                        </ul>
+                    </div>
+                    <?php }?>
+                    <div class="ms_product_rating_and_links">
+                       	<div class="ms_product_rating">
+                           	<div class="ms_product_rating_stars"><?php echo Mage::helper('page')->product_review($_product->getId()); ?></div>
+                            <?php $reviewsCount = Mage::getModel('review/review')->getTotalReviews($_product->getId(), true, Mage::app()->getStore()->getId()); ?>
+                            <span class="ms_product_rating_text">( <?=$reviewsCount?> Rating )</span>
+                        </div>
+                        <div class="ms_add_and_details_buttons">
+                            <?php if($b2b_count!=1){ ?>
+                            <?php if($_product->isSaleable() && !$_product->canConfigure()): ?>
+                           	<div class="ms_addto_cart"><a href="javascript:void(0)" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><?php echo $this->__('ADD TO CART') ?></a></div>
+                            <?php elseif($_product->isSaleable()): ?>
+                            <div class="ms_addto_cart"><a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('ADD TO CART') ?></a></div>
+                            <?php else: ?>
+                            <div class="ms_addto_cart"><a href="javascript:void(0)"><?php echo $this->__('Out of stock') ?></a></div>
+                            <?php endif; ?>
+                            <div class="ms_details_button"><a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('DETAILS') ?></a></div>
+                            <?php } else{ ?>
+                            <div class="ms_addto_cart" id="quotation-manual-b<?=$i?>" style="margin: auto;float: none;text-align: center;"><a target="_parent" href="javascript:void(0)"><?php echo $this->__('Get Quotations Now') ?></a></div>
+                            <div class="ms_details_button" style="float: none; text-align: center; margin-top: 6px;"><a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('DETAILS') ?></a></div>
+                            <?php }?>
+                        </div>
+                        <?php if($b2b_count!=1){ ?>
+                        <div class="ms_wishlist_and_compare">
+                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                           	<a class="ms_wishlist" href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>">Wishlist</a>
+                        <?php endif; ?>
+                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                            <a class="ms_compare" href="<?php echo $_compareUrl ?>">Compare</a>
+                        <?php endif; ?>
+                        </div> 
+                        <?php }?>                                         
+                    </div>
+                </div>
+                <?php 
+                    $customer = Mage::getSingleton('customer/session')->getCustomer();
+                    if($customer->getEntityId()!='')
+                    {
+                        $user_id=$customer->getEntityId();
+                        $form_key='';
+                    }
+                    else
+                    {
+                        $user_id='null';
+                        $form_key= Mage::getSingleton('core/session')->getFormKey();
+                    }
+                    if($b2b_count==1)
+                    {
+                        $b2b_view='?b=true';
+                    }
+                    else
+                    {
+                        $b2b_view='';
+                    }
+                ?>
+                <?php //echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>
+                <script type="text/javascript">
+                jQuery.noConflict()
+                jQuery(document).ready(function() {
+                    jQuery("#fancybox-manual-b<?=$i?>").click(function() {
+            				jQuery.fancybox.open({
+            					href : '<?=Mage::getBaseUrl()?>quickshop/index/view/path/<?=$_product->getUrlKey()?>.html<?=$b2b_view?>',
+            					type : 'iframe',
+            					maxWidth	: 800,
+                        		maxHeight	: 550,
+                        		fitToView	: false,
+                        		width		: '70%',
+                        		height		: '100%',
+                        		autoSize	: false,
+                        		closeClick	: false,
+                        		openEffect	: 'none',
+                        		closeEffect	: 'none',
+                                helpers     : { 
+                                                overlay : {closeClick: false}
+                                              },
+                                afterClose  : function() 
+                                              {
+                                                   location.href = "<?php echo $c_url ?>";
+                                              }
+            				});
+            			});
+                    jQuery("#quotation-manual-b<?=$i?>").click(function() {
+            				jQuery.fancybox.open({
+            					href : '<?=Mage::getBaseUrl()?>marketplace/quotationsform.php?id=<?=$_product->getId()?>&userid=<?=$user_id?>&key=<?=$form_key?>&url=<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];/*Mage::registry('current_category')->getUrl()*/ ?>',
+            					type : 'iframe',
+            					maxWidth	: 800,
+                        		maxHeight	: 550,
+                        		fitToView	: false,
+                        		width		: '70%',
+                        		height		: '100%',
+                        		autoSize	: false,
+                        		closeClick	: false,
+                        		openEffect	: 'none',
+                        		closeEffect	: 'none',
+                                helpers     : { 
+                                                overlay : {closeClick: false}
+                                              },
+                                afterClose  : function() 
+                                              {
+                                                   location.href = "<?php echo $c_url ?>";
+                                              }
+            				});
+            			});
+                });
+            	</script>
+                <!-- <a class="ms_product_quick_view" id="fancybox-manual-b<?=$i?>" href="javascript:void(0)">QUICK VIEW</a> -->
+                </div>
+            
+            </li>
+            <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+            </ul>
+            <?php endif ?>
+        <?php endforeach ?>
+    <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+    <?php endif; ?>
+     <?php 
+    if($_GET['key']==''){echo $this->getToolbarHtml();}else{ ?>
+    <div class="ms_search_and_pagination">
+   	    <form class="ms_search_product_listing_search" action="<?=$_category->getUrl($_category)?>" method="get">
+           	<input name="key" onkeypress="hideOptionPhoto()" class="ms_search_pl_search_input" type="text" placeholder="Search Products"/>
+            <input class="ms_search_pl_search_button" type="submit" value=""/>
+        </form>
+        <ul class="ms_pagination">
+        <?php
+        $page   = intval($_GET['page']);
+        $tpages = $total_pages; // 20 by default
+        $adjacents  = intval($_GET['adjacents']);
+                                            
+        if($page<=0)  $page  = 1;
+        if($adjacents<=0) $adjacents = 1;
+                                            
+        $url_cu=$_category->getUrl($_category).'?key='.$_GET['key'];
+        echo Mage::helper('page')->paginate_three($url_cu, $page, $total_pages, 2);
+        ?>
+        </ul>
+    </div>
+    <?php }?>
+<?php endif; ?>
+<?php
+    //set product collection on after blocks
+    // $_afterChildren = $this->getChild('after')->getSortedChildren();
+    // foreach($_afterChildren as $_afterChildName):
+    //     $_afterChild = $this->getChild('after')->getChild($_afterChildName);
+    //     $_afterChild->setProductCollection($_productCollection);
+    ?>
+    <?php //echo $_afterChild->toHtml(); ?>
+<?php //endforeach; ?>
+</div>

@@ -1,0 +1,24 @@
+<?php if($this->checkEnabled()==1):?>
+<?php $json = $this->jsonEncodeandDecode();?>
+<script type="text/javascript">	
+//<![CDATA[
+	Event.observe(window, "load", function () {
+	formulaCSVPricing = new FormulaCSVPricing(<?php echo $json;?>);
+		<?php 
+		$jsonArray = json_decode($json,true);	  		
+		$defaultQty = $jsonArray['default_qty'];
+		?>
+		<?php if(!empty($defaultQty)): ?>
+			<?php $actionName = Mage::app()->getFrontController()->getRequest()->getActionName(); ?>
+			<?php if($actionName != "configure"): ?>
+				document.getElementById('qty').value = '<?php echo $defaultQty; ?>';				
+			<?php endif;?>
+		<?php endif; ?>		
+		//formulaCSVPricing.changeBasePrice(); 
+	});
+//]]>
+</script>
+<style>
+	.nextbits-btn-none{opacity:0.3 !important;}
+</style>
+<?php endif;?>

@@ -1,0 +1,37 @@
+<?php $data = Mage::registry('pricesheeet');?>
+<?php $product = Mage::getModel('catalog/product')->load(Mage::app()->getRequest()->getParam('pid'));?>
+<div class="data">
+<?php echo "<table>";?>
+<?php foreach($data as $key=>$value):?>
+	<?php if($i==0):?>	
+	<?php echo "<tr>";?>
+	<?php echo "<td>";?>
+	<?php echo $this->__('Row Equation');?>&#8595;
+	<?php echo $this->__('Column Equation');?>&#8594;
+	<?php echo "</td>";?>
+	<?php $rowvalue=array_keys($value);?>
+	<?php foreach($rowvalue as $row):?>
+		<?php echo "<td>";?>
+		<?php echo $row;?>
+		<?php echo "</td>";?>
+	<?php endforeach;?>
+	<?php echo "</tr>";?>
+	<?php endif;?>
+	<?php $i++;?>
+	<?php echo "<tr>";?>
+	<?php echo "<td>";?>
+	<?php echo $key;?>
+	<?php echo "</td>";?>
+	<?php foreach($value as $_key=>$_value):?>
+		<?php //echo "<pre>";print_r($_value);exit;?>
+		<?php echo "<td>";?>
+		<?php echo $_value;?>
+		<?php echo "</td>";?>
+	<?php endforeach;?>
+	<?php echo "</tr>";?>
+<?php endforeach;?>
+<?php echo "</table>";?>
+</div>
+<style>
+	.data tr td {  border: 1px solid #CACACA;padding: 3px;text-align: center;}
+</style>

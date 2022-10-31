@@ -1,0 +1,205 @@
+<?php
+	$current_theme = Mage::getSingleton('core/design_package')->getPackageName();
+	$img_skin_path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'adminhtml/'.$current_theme.'/default/cmsmart/onlinedesign/images/default.png';
+
+	$id     = $this->getRequest()->getParam('id');
+	$onlinedesignIds = Mage::getModel('onlinedesign/onlinedesign')->_getOnlineDesignByProduct($id);
+	$data = "";
+	if(sizeof($onlinedesignIds)) {
+		foreach ($onlinedesignIds as $od) {
+			$data = $od->getContentDesign();
+			$dpi = $od->getDpi();
+			break;
+		}
+		$designer_setting = unserialize($data);
+		/* zend_debug::dump($designer_setting);
+		foreach ($designer_setting as $k => $v){
+			zend_debug::dump($v["img_src_width"]);
+		} */
+	} else {
+		/* $data = 'a:2:{i:0;a:9:{s:16:"orientation_name";s:7:"frame_0";s:7:"img_src";s:72:"'.$img_skin_path.'";s:11:"img_src_top";s:1:"0";s:12:"img_src_left";s:1:"0";s:13:"img_src_width";s:1:"0";s:14:"img_src_height";s:1:"0";s:16:"area_design_left";s:1:"0";s:17:"area_design_width";s:3:"300";s:18:"area_design_height";s:3:"117";}i:1;a:10:{s:10:"real_width";s:2:"99";s:16:"orientation_name";s:7:"frame_1";s:7:"img_src";s:72:"'.$img_skin_path.'";s:11:"img_src_top";s:1:"0";s:12:"img_src_left";s:1:"0";s:13:"img_src_width";s:1:"0";s:14:"img_src_height";s:1:"0";s:16:"area_design_left";s:1:"0";s:17:"area_design_width";s:3:"300";s:18:"area_design_height";s:3:"117";}}'; */
+		$designer_setting = array(
+            array(
+                'orientation_name' => 'frame_1',
+                'img_src' => $img_skin_path,
+                'real_width' => '30',
+                'real_height' => '30',
+                'area_design_top' => '50',
+                'area_design_left' => '50',
+                'area_design_width' => '200',
+                'area_design_height' => '200',
+				
+                'img_src_top' => '0',
+                'img_src_left' => '0',
+                'img_src_width' => '300',
+                'img_src_height' => '300'
+            )
+        );
+	}
+	
+	if($dpi == 0 || $dpi == "")$dpi = 96;
+?>
+
+<div id="nbdesigner-setting-container">
+    <?php //wp_nonce_field('nbdesigner_setting_box', 'nbdesigner_setting_box_nonce'); ?>		
+    
+    <div class="nbdesigner-right add_more">
+        <a class="button button-primary btn-add-more" onclick="NBDESIGNADMIN.addOrientation()"><?php echo $this->__('Add More'); ?></a>
+    </div>
+	<div class="nbdesigner-left">
+        <!-- <input type="hidden" value="0" name="_nbdesigner_enable"/>
+        <label for="_nbdesigner_enable" class="nbdesigner-setting-box-label"><?php //echo $this->__('Enable Design'); ?></label>
+        <input type="checkbox" value="1" name="_nbdesigner_enable" id="_nbdesigner_enable" <?php //checked(get_post_meta($post_id, '_nbdesigner_enable', true)); ?> class="short" /> -->
+    </div>
+    <div class="nbdesigner-clearfix"></div>
+    <div id="nbdesigner_dpi_con">
+        <label for="nbdesigner_dpi" class="nbdesigner-setting-box-label"><?php echo $this->__('DPI'); ?></label>
+        <input name="_nbdesigner_dpi" id="nbdesigner_dpi" value="<?php echo $dpi;?>" type="number"  min="0" max="300" style="width: 60px;" onchange="NBDESIGNADMIN.updateSolutionImage()">&nbsp;<small>(<?php echo $this->__('Dots Per Inch'); ?>)</small>   
+    </div>
+    <div id="nbdesigner-boxes" class="<?php //if (!get_post_meta($post_id, '_nbdesigner_enable', true)) echo 'nbdesigner-disable'; ?>">
+        <?php $count = 0;
+        foreach ($designer_setting as $k => $v): ?>
+            <div class="nbdesigner-box-container">
+                <div class="nbdesigner-box">
+                    <label class="nbdesigner-setting-box-label"><?php $this->__('Name:'); ?></label>
+                    <div class="nbdesigner-setting-box-value">
+                        <input name="_designer_setting[<?php echo $k; ?>][orientation_name]" class="short orientation_name" value="<?php echo $v['orientation_name']; ?>" type="text" required/>
+                    </div>
+                    <div class="nbdesigner-right">
+                        <a class="button nbdesigner-collapse" onclick="NBDESIGNADMIN.collapseBox(this)"><span class="dashicons dashicons-arrow-up"></span><?php echo $this->__('Less setting'); ?></a>
+                        <a class="button nbdesigner-delete delete_orientation" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.deleteOrientation(this)">&times;</a>
+                    </div>
+                </div>
+                <div class="nbdesigner-box nbdesigner-box-collapse">
+                    <div class="nbdesigner-image-box">
+                        <div class="nbdesigner-image-inner">
+                            <div class="nbdesigner-image-original">
+                                <img src="<?php if ($v['img_src'] != '') {echo $v['img_src'];} else {echo $img_skin_path;} ?>" 
+                                     class="designer_img_src" style="margin-top: <?php echo $v['img_src_top']; ?>px; margin-left: <?php echo $v['img_src_left']; ?>px"
+                                    />
+                            </div>
+                            <div class="nbdesigner-area-design" id="nbdesigner-area-design-<?php echo $k; ?>" style="width: <?php echo $v['area_design_width'] . 'px'; ?>; height: <?php echo $v['area_design_height'] . 'px'; ?>; left: <?php echo $v['area_design_left'] . 'px'; ?>; top: <?php echo $v['area_design_top'] . 'px'; ?>;"> </div>
+                        </div>
+
+                        <input type="hidden" class="hidden_img_src" name="_designer_setting[<?php echo $k; ?>][img_src]" value="<?php echo $v['img_src']; ?>" >
+                        <input type="hidden" class="hidden_img_src_top" name="_designer_setting[<?php echo $k; ?>][img_src_top]" value="<?php echo $v['img_src_top']; ?>">
+                        <input type="hidden" class="hidden_img_src_left" name="_designer_setting[<?php echo $k; ?>][img_src_left]" value="<?php echo $v['img_src_left']; ?>">
+                        <input type="hidden" class="hidden_img_src_width" name="_designer_setting[<?php echo $k; ?>][img_src_width]" value="<?php echo $v['img_src_width']; ?>">
+                        <input type="hidden" class="hidden_img_src_height" name="_designer_setting[<?php echo $k; ?>][img_src_height]" value="<?php echo $v['img_src_height']; ?>">
+                        <div>	
+                            <a class="button nbdesigner_move nbdesigner_move_left" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'left')">&larr;</a>
+                            <a class="button nbdesigner_move nbdesigner_move_right" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'right')">&rarr;</a>
+                            <a class="button nbdesigner_move nbdesigner_move_up" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'up')">&uarr;</a>
+                            <a class="button nbdesigner_move nbdesigner_move_down" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'down')">&darr;</a>
+                            <a class="button nbdesigner_move nbdesigner_move_center" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'center')">1/2</a>
+                            <a class="button nbdesigner_move nbdesigner_move_center" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'fit')">-|-</a>
+                            <!-- <a class="button nbdesigner-button nbdesigner-add-image" style="margin-top: 10px;" onclick="NBDESIGNADMIN.loadImage(this)" data-index="<?php //echo $k; ?>"><?php //echo __('Change image'); ?></a> -->
+							<div class="btn-control-image">
+								<input class="changeImage" onchange="previewFile(this)" type="file"><br />
+								<a class="btn-upload-image" onclick="uploadFile(this)">Upload this image</a>
+							</div>
+                        </div>
+                    </div>
+                    <div class="nbdesigner-info-box">
+                        <div class="nbdesigner-info-box-inner">
+                            <label class="nbdesigner-setting-box-label"><?php echo __('Real width design zone', $this->textdomain); ?></label>
+                            <div>
+                                <input type="number" name="_designer_setting[<?php echo $k; ?>][real_width]" value="<?php echo $v['real_width']; ?>" class="short real_width" onchange="NBDESIGNADMIN.updateDimensionRealOutputImage(this, 'width')">&nbsp;cm <span class="real_width_hidden"><?php echo $v['real_width']; ?></span><small>~ <?php echo $this->__('Output image width'); ?>: <span class="real_width_px"><?php echo round($v['real_width'] * $dpi / 2.54, 0); ?></span> px</small>
+                            </div>
+                        </div>
+                        <div class="nbdesigner-info-box-inner">
+                            <label class="nbdesigner-setting-box-label"><?php echo __('Real height design zone', $this->textdomain); ?></label>
+                            <div>
+                                <input type="number"  min="1" name="_designer_setting[<?php echo $k; ?>][real_height]" value="<?php echo $v['real_height']; ?>" class="short real_height"  onchange="NBDESIGNADMIN.updateDimensionRealOutputImage(this, 'height')">&nbsp;cm <span class="real_height_hidden"><?php echo $v['real_height']; ?></span><small>~ <?php echo $this->__('Output image height: '); ?><span class="real_height_px"><?php echo round($v['real_height'] * $dpi / 2.54, 0); ?></span> px</small>
+                            </div>
+                        </div>
+                        <div class="nbdesigner-info-box-inner">
+                            <label class="nbdesigner-setting-box-label"><?php echo __('Design area margin top', $this->textdomain); ?></label>
+                            <div>
+                                <input type="number"  min="1" name="_designer_setting[<?php echo $k; ?>][area_design_top]" value="<?php echo $v['area_design_top']; ?>" class="short area_design_dimension area_design_top" data-index="top" onchange="NBDESIGNADMIN.updatePositionDesignArea(this)">&nbsp;px
+                            </div>
+                        </div>
+                        <div class="nbdesigner-info-box-inner">
+                            <label class="nbdesigner-setting-box-label"><?php echo __('Design area margin left', $this->textdomain); ?></label>
+                            <div>
+                                <input type="number"  min="0" name="_designer_setting[<?php echo $k; ?>][area_design_left]" value="<?php echo $v['area_design_left']; ?>" class="short area_design_dimension area_design_left" data-index="left" onchange="NBDESIGNADMIN.updatePositionDesignArea(this)">&nbsp;px
+                            </div>
+                        </div>	
+                        <div class="nbdesigner-info-box-inner">
+                            <label class="nbdesigner-setting-box-label"><?php echo __('Design area width', $this->textdomain); ?></label>
+                            <div>
+                                <input type="number"  min="0" name="_designer_setting[<?php echo $k; ?>][area_design_width]" value="<?php echo $v['area_design_width']; ?>" class="short area_design_dimension area_design_width" data-index="width" onchange="NBDESIGNADMIN.updatePositionDesignArea(this)">&nbsp;px
+                            </div>
+                        </div>
+                        <div class="nbdesigner-info-box-inner">
+                            <label class="nbdesigner-setting-box-label"><?php echo __('Design area height', $this->textdomain); ?></label>
+                            <div>
+                                <input type="number"  min="0" name="_designer_setting[<?php echo $k; ?>][area_design_height]" value="<?php echo $v['area_design_height']; ?>" class="short area_design_dimension area_design_height" data-index="height" onchange="NBDESIGNADMIN.updatePositionDesignArea(this)">&nbsp;px
+                            </div>
+                        </div>					
+                    </div>	
+                </div>
+            </div>
+    <?php $count++;
+endforeach; ?>
+        <input type="hidden" value="<?php echo $count; ?>" id="nbdesigner-count-box"/>
+    </div>
+</div>
+
+<script>
+	var data_image = "";
+	var file_name = "";
+
+	function previewFile(e){
+		var file    = jQuery(e)[0].files[0];
+		/* get img designer_img_src class */
+		var p = jQuery(e).parents(':eq(2)').find('.nbdesigner-image-inner .designer_img_src');
+		var reader  = new FileReader();
+		
+		var hidden_img_src_width = jQuery(e).parents(':eq(2)').find('.hidden_img_src_width');
+		var hidden_img_src_height = jQuery(e).parents(':eq(2)').find('.hidden_img_src_height');
+		/* after image load */
+		reader.onloadend = function () {	  
+			data_image = reader.result;
+			jQuery(p).attr("src", data_image);
+			
+			NBDESIGNADMIN.calcMargin(p.width(), p.height(), p);
+			NBDESIGNADMIN.calcPositionImg(p);
+			jQuery(hidden_img_src_width).attr("value", p.width());
+			jQuery(hidden_img_src_height).attr("value", p.height());
+		}
+		
+		if (file) {
+			file_name = file.name;
+			reader.readAsDataURL(file); /* reads the data as a URL */
+		}
+	}
+		
+	function uploadFile(e){
+		var inputFile = jQuery(e).prev().prev();
+		if(data_image){
+			inputFile.css("border", "");
+			var el_image_show = jQuery(e).parents(':eq(3)').find('.nbdesigner-image-inner .designer_img_src');
+			var el_image_hidden = jQuery(e).parents(':eq(3)').find('.hidden_img_src');
+
+			jQuery.ajax({
+				url: "<?php echo $this->getUrl('onlinedesign/uploadimage/upload', array('_current'=>true)); ?>",
+				type: 'POST',
+				data: {
+					filename: file_name, 
+					data_image: data_image
+				},
+				dataType: 'json',
+				success: function(res) {
+					jQuery(el_image_show).attr("src", res.url);
+					jQuery(el_image_hidden).attr("value", res.url);
+					alert("Upload File Successfully!");
+				}
+			});    
+		} else {
+			inputFile.css("border", "1px dashed red");
+			alert("Please choose image...");
+		}
+	}
+
+</script>

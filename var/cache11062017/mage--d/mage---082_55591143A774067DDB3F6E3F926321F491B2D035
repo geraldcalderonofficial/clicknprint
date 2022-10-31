@@ -1,0 +1,129 @@
+<style>
+.owl-bottom-narrow .owl-controls {
+	position: absolute;
+	bottom: 10px;
+	margin: 0;
+	width: 100%;
+}
+</style>
+
+<div class="owl-bottom-narrow owl-banner-carousel" style="margin-bottom: 20px;">
+<div id="banner-slider-demo-6" class="owl-carousel owl-theme">
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/caslider01.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/caslider02.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/caslider03.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/caslider04.jpg" /></div>
+		
+</div>
+
+<script type="text/javascript">// <![CDATA[
+jQuery(function($){
+                
+$("#banner-slider-demo-6").owlCarousel({
+
+autoPlay:true,
+		lazyLoad: true,
+                    slideSpeed : 5000,
+                    paginationSpeed : 300,
+                    singleItem:true,
+                    responsiveRefreshRate: 50,
+                    slideSpeed: 5000,
+                    paginationSpeed: 400,
+                    stopOnHover: false,
+                    rewindNav: true,
+                    rewindSpeed: 500,
+                    navigation: false
+
+});
+            });
+// ]]></script>
+
+
+</div>
+
+
+<br>
+
+<div  class="col-md-12"   style="padding-left: 0; text-align:justify;">
+            <p>Canvas is a great & cost effective way to decorate your home or your workplace. Whether you want to keep a lasting memory of that beautiful trip you had, or bring more colors & life to the boardroom or your baby’s room, our canvas will do just that. Printed on real canvas with our high quality color vibrant UV inks, you can choose frames of 2.5 cm or 5cm thickness or just plain rolled canvas.</p>
+</div>
+
+
+<br>
+
+
+<div class="category-products">
+	<ul class="products-grid  columns4">  
+                    <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                              
+ <a href="https://clicknprint.ae/index.php/canvas/standard-canvas.html" title="Standard Canvas" class="product-image">
+                                            <img id="product-collection-image-146" class="defaultImage" src="https://clicknprint.ae/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/c/a/category_standard_canvas-01_1.jpg" alt="Standard Canvas 15 x 15 cm">
+                        <img class="hoverImage" src="https://clicknprint.ae/media/catalog/product/cache/1/thumbnail/300x/17f82f742ffe127f42dca9de82fb58b1/c/a/category_standard_canvas-01.jpg" alt="Standard Canvas 15 x 15 cm">
+                                                                                                        </a>
+
+                                                             <!--<a href="https://clicknprint.ae/index.php/canvas/standard-canvas.html" title="Standard Canvas" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/stcatn.jpg" alt="Standard Canvas"></a>-->
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/canvas/standard-canvas.html" title="Standard Canvas">Standard Canvas</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+                
+                      <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                             
+                                          <a href="https://clicknprint.ae/index.php/canvas/wall-design.html" title="Wall Design" class="product-image">
+                                            <img id="product-collection-image-169" class="defaultImage" src="https://clicknprint.ae/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/c/a/category_wall_design_canvas-01_2.jpg" alt="Wall Design 126 x 126 cm">
+                        <img class="hoverImage" src="https://clicknprint.ae/media/catalog/product/cache/1/thumbnail/300x/17f82f742ffe127f42dca9de82fb58b1/c/a/category_wall_design_canvas-01_1.jpg" alt="Wall Design 126 x 126 cm">
+                                                                                                        </a>
+
+                                                           <!-- <a href="https://clicknprint.ae/index.php/canvas/wall-design.html" title="Wall Design" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/wadetn.jpg" alt="Wall Design"></a>-->
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/canvas/wall-design.html" title="Wall Design">Wall Design</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+<li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                             
+<a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-1.html" title="Rolled Canvas" class="product-image">
+                                            <img id="product-collection-image-241" class="defaultImage" src="https://clicknprint.ae/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/r/o/rolled.jpg" alt="Rolled Canvas">
+                        <img class="hoverImage" src="https://clicknprint.ae/media/catalog/product/cache/1/thumbnail/300x/17f82f742ffe127f42dca9de82fb58b1/r/o/rolled_canvas_sub_category-01.jpg" alt="Rolled Canvas">
+                                                                                                        </a>
+
+
+
+<!-- <a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-1.html" title="Rolled Canvas" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/rolled.jpg" alt="Rolled Canvas"></a>-->
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/canvas/rolled-canvas-1.html" title="Rolled Canvas">Rolled Canvas</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+
+
+        </ul>
+</div>
+
+
+

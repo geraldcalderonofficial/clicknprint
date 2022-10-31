@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <mageexten translate="label" module="core">
+            <label>Mage-Exten</label>
+            <sort_order>100</sort_order>
+        </mageexten>
+    </tabs>
+    <sections>
+        <newsleteremail translate="label" module="newsleteremail">
+            <label>Newsletter Email</label>
+            <tab>mageexten</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>90</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label comment">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>						<enabled translate="label">                            <label>Enabled</label>                            <frontend_type>select</frontend_type>                            <source_model>adminhtml/system_config_source_yesno</source_model>                            <sort_order>0</sort_order>                            <show_in_default>1</show_in_default>                            <show_in_website>1</show_in_website>                            <show_in_store>1</show_in_store>                        </enabled>												<!-- <bcc_subject translate="lable">                            <label>BCC Email Subject</label>                            <frontend_type>text</frontend_type>                            <sort_order>50</sort_order>                            <show_in_default>1</show_in_default>                            <show_in_website>1</show_in_website>                            <show_in_store>1</show_in_store>							<comment>                                <![CDATA[The subject email will show in BCC email]]>                            </comment>                        </bcc_subject> -->						
+                        <bcc_emails translate="lable">
+                            <label>Email BCC</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>
+                                <![CDATA[Separate by comma. Ex: email@gmail.com, test@gmail.com]]>
+                            </comment>
+                        </bcc_emails>
+                    </fields>
+                </settings>
+            </groups>
+        </newsleteremail>
+    </sections>
+</config>

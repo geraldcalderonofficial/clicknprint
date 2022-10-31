@@ -1,0 +1,65 @@
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+
+
+#matrix-result {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 100%;
+    /*border-collapse: collapse;*/
+}
+
+#matrix-result td, #matrix-result th {
+    /*font-size: 1em;*/
+    padding: 3px 7px 2px 7px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#matrix-result th {
+    font-size: 1.1em;
+    text-align: left !important;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #4d8a9d;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#matrix-result tr td, #matrix-result tr th {
+    border:1pt solid #E3E3E3;
+    /*color: #000000;*/
+    /*background-color: #E3E3E3;*/
+}
+
+#matrix-result table{
+    border-collapse: collapse;
+}
+
+#matrix-result .first-column {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #4d8a9d !important;
+    color: #ffffff !important;
+}
+
+#matrix-result > table {
+    margin: 0 auto;
+}
+
+#matrix-result td:hover{
+    background-color: #F1E8CB;
+}
+
+#matrix-result td.active, #matrix-result tr.active{
+    background-color: #F2F2F2;
+}
+
+#matrix-result td.highlight{
+    background-color: #F5FC14;
+}

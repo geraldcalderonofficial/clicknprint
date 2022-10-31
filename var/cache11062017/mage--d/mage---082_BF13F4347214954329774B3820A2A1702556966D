@@ -1,0 +1,48 @@
+<style>
+.owl-bottom-narrow .owl-controls {
+	position: absolute;
+	bottom: 10px;
+	margin: 0;
+	width: 100%;
+}
+
+.category-products .products-grid li.item .details-area .product-name {
+      margin: 0 0 3px 0;
+      padding: 0 40px;
+}
+
+</style>
+
+<div class="owl-bottom-narrow owl-banner-carousel" style="margin-bottom: 20px;">
+<div id="banner-slider-demo-6" class="owl-carousel owl-theme">
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/rollup/roupslider03.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/rollup/roupslider02.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/rollup/roupslider04.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/rollup/roupslider01.jpg" /></div>
+		
+</div>
+
+
+<script type="text/javascript">// <![CDATA[
+jQuery(function($){
+                
+$("#banner-slider-demo-6").owlCarousel({
+
+autoPlay:true,
+		lazyLoad: true,
+                    slideSpeed : 5000,
+                    paginationSpeed : 300,
+                    singleItem:true,
+                    responsiveRefreshRate: 50,
+                    slideSpeed: 5000,
+                    paginationSpeed: 400,
+                    stopOnHover: false,
+                    rewindNav: true,
+                    rewindSpeed: 500,
+                    navigation: false
+
+});
+            });
+// ]]></script>
+
+</div>

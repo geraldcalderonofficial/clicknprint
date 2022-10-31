@@ -1,0 +1,56 @@
+<style>
+.owl-bottom-narrow .owl-controls {
+	position: absolute;
+	bottom: 10px;
+	margin: 0;
+	width: 100%;
+}
+</style>
+
+<div class="owl-bottom-narrow owl-banner-carousel" style="margin-bottom: 20px;">
+<div id="banner-slider-demo-6" class="owl-carousel owl-theme">
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/magnetic/msslider01.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/magnetic/msslider02.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/magnetic/msslider03.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/magnetic/msslider04.jpg" /></div>
+		
+</div>
+
+<script type="text/javascript">// <![CDATA[
+jQuery(function($){
+                
+$("#banner-slider-demo-6").owlCarousel({
+
+autoPlay:true,
+		lazyLoad: true,
+                    slideSpeed : 5000,
+                    paginationSpeed : 300,
+                    singleItem:true,
+                    responsiveRefreshRate: 50,
+                    slideSpeed: 5000,
+                    paginationSpeed: 400,
+                    stopOnHover: false,
+                    rewindNav: true,
+                    rewindSpeed: 500,
+                    navigation: false
+
+});
+            });
+// ]]></script>
+
+
+</div>
+
+
+<br>
+
+<div  class="col-md-12"   style="padding-left: 0; text-align:justify;">
+            <p>Do you have an event? Are you participating in an exhibition or do you just want to highlight a message or a promotion? Roll Ups, X Banners, Pop Ups or Promotion tables are the best easy to assemble tools that will help you reach your audience. Printed with our High quality color vibrant UV inks, they can be setup in no time and help you ensure your message stands out from the rest.</p>
+</div>
+
+
+<br>
+
+
+
+

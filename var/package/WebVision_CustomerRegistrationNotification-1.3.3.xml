@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+    <name>WebVision_CustomerRegistrationNotification</name>
+    <version>1.3.3</version>
+    <stability>stable</stability>
+    <license>LGPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Get a notification email of every new customer registration, including a customizable email template.</summary>
+    <description>&lt;h2&gt;Customer Registration Notification by web-vision&lt;/h2&gt;&#xD;
+&lt;p&gt;After a customer has registered in your Magento Shop you will receive an email including all given customer address data. Also the company will be available in the email.&lt;p /&gt;&#xD;
+&lt;p /&gt;&#xD;
+The email address and the sender name can be configured from the Magento System setting.&lt;/p&gt;&#xD;
+&#xD;
+&lt;h3&gt;Support for transactional email templates&lt;/h3&gt;&#xD;
+The email template includes all fields that are currently available in the email.</description>
+    <notes>* Added configuration option which allows to use the email of the registered customer to be used as the sender of the email</notes>
+    <authors><author><name>Tim Werdin</name><user>twerdin</user><email>t.werdin@web-vision.de</email></author></authors>
+    <date>2016-06-10</date>
+    <time>11:46:13</time>
+    <contents><target name="magecommunity"><dir name="WebVision"><dir name="CustomerRegistrationNotification"><dir name="Helper"><file name="Data.php" hash="d750ac962181a75e6a72c0f1c20444f1"/></dir><dir name="Model"><file name="Observer.php" hash="29babc8f68e80b379e0f8e1ad65dccb9"/></dir><dir name="etc"><file name="config.xml" hash="64d2ebc7e5e6e2bf09ece559ed8a297f"/><file name="system.xml" hash="b3ba4c9e937625220ec5bc77a9d436c3"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="WebVision_CustomerRegistrationNotification.xml" hash="b525f7e4c5cd1616118f392741926b13"/></dir></target><target name="magelocale"><dir name="en_US"><dir name="template"><dir name="email"><file name="notify_new_customer.html" hash="0a35b65a2e9ff900638f3a7c26d20147"/></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.0.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

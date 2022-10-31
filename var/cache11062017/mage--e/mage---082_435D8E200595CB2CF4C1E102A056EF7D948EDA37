@@ -1,0 +1,16 @@
+<div class="block">
+    <div class="block-title"><strong><span>My Account</span></strong></div>
+
+    <div class="block-content">
+<ul class="links">
+    <li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/about-us" title="About ClicknPrint">About ClicknPrint</a></li>
+    <li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/contacts" title="Contact us">Contact us</a></li>
+    <!--<li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/customer/account" title="My account">My account</a></li>
+    <li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/sales/order/history" title="Orders history">Orders history</a></li>
+    <li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/catalogsearch/advanced" title="Advanced search">Advanced search</a></li>-->
+     <li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/faq" title="FAQ">FAQ</a></li>
+     <li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/privacy-policy" title="Privacy Policy">Privacy Policy</a></li>
+     <li><i class="icon-right-dir theme-color"></i><a href="https://clicknprint.ae/terms-of-service" title="Terms of Service">Terms of Service</a></li>
+</ul>
+</div>
+</div>

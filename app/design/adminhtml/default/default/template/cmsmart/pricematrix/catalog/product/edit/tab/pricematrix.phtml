@@ -1,0 +1,12 @@
+<?php
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+?>
+<?php if(Mage::helper('cmsmart_pricematrix')->isEnabled()):?>
+<div id="attributes">
+    <?php echo $this->getChildHtml('catalog_product_edit_tab_pricematrix_attributes');?>
+</div>
+<?php endif;?>

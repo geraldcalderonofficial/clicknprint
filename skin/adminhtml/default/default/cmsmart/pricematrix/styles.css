@@ -1,0 +1,210 @@
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+
+
+
+#attributes{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+.connected{
+    float: left;
+    width: 100%;
+    min-height:180px;
+    -moz-user-select: none;
+    margin: 10px 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.connected .item{
+    border: 1px solid #CCC;
+    background: #FFFFFF;
+    font-family: "Tahoma";
+    color: #1C94C4;
+    margin: 0px 10px;
+    padding: 5px;
+    height: 22px;
+}
+
+#connected {
+    width: 100%;
+    overflow: hidden;
+    margin: auto;
+}
+
+div.sortable-placeholder{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px dashed #ccc;
+    color: #a7a7a7;
+    font-size: 15px;
+    font-style: italic;
+    height: 20px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.attributes .label{
+    background-color: #4d8a9d;
+    color: white;
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 0;
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+.attributes{
+    float: left;
+    background-color: #e3e3e3;
+}
+
+.btn-show {
+    height: auto;
+    margin: 10px 0;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+#all-attributes {
+    min-height: 500px;
+}
+
+.col-left {
+    /*border: 1px solid;*/
+    display: block;
+    float: left;
+    height: auto;
+    overflow: hidden;
+    width: 30%;
+}
+.col-right {
+    /*border: 1px solid;*/
+    display: block;
+    overflow: hidden;
+    width: 70%;
+}
+
+.attributes.right-attributes {
+    margin: 1%;
+    width: 48%;
+}
+
+.attributes.left-attributes{
+    width: 96%;
+    margin: 2%;
+}
+
+#matrix-result {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 100%;
+    /*border-collapse: collapse;*/
+}
+
+#matrix-result td, #matrix-result th {
+    /*font-size: 1em;*/
+    padding: 3px 7px 2px 7px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#matrix-result th {
+    font-size: 1.1em;
+    text-align: left !important;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #4d8a9d;
+    color: #ffffff;
+}
+
+#matrix-result tr.alt td {
+    color: #000000;
+    /*background-color: #E3E3E3;*/
+}
+
+#matrix-result tr td, #matrix-result tr th {
+    border:1pt solid #E3E3E3;
+    /*color: #000000;*/
+    /*background-color: #E3E3E3;*/
+}
+
+#matrix-result table{
+    border-collapse: collapse;
+}
+
+.first-column {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #4d8a9d !important;
+    color: #ffffff !important;
+}
+
+#matrix-result > table {
+    margin: 0 auto;
+}
+
+.left-down-button {
+    float: right;
+}
+
+.right-down-button {
+    float: right;
+}
+.down-button {
+    margin: 0 1%;
+    overflow: hidden;
+    text-align: center;
+    width: 48%;
+}
+
+#matrix-result td:hover{
+    background-color: #F1E8CB;
+}
+
+.unselect-all {
+    float: right;
+}
+
+.select-all {
+    float: left;
+}
+
+.all {
+    margin: 2%;
+    width: 42%;
+}
+
+.select-unselect-all {
+    border: 1px solid #cccccc;
+    margin: 10px 10px 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.slimScrollRail{
+    background: none repeat scroll 0 0 #e3e3e3 !important;
+    border-radius: 7px;
+    display: block;
+    height: 100%;
+    opacity: 0.2;
+    position: absolute;
+    right: 1px;
+    top: 0;
+    width: 7px;
+    z-index: 90;
+}

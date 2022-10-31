@@ -1,0 +1,288 @@
+<?php
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+
+?>
+
+<?php if(Mage::helper('cmsmart_pricematrix')->isEnabled()):?>
+
+<?php
+$currentProduct = $this->getRequest()->getParam('id');
+
+$optionIdArray = array();
+
+$verticalCollection = Mage::getModel('cmsmart_pricematrix/vertical')
+    ->getCollection()
+    ->addFieldToFilter('product', array('eq'=>$currentProduct));
+
+foreach($verticalCollection as $vertical){
+    $optionIdArray[] = $vertical->getValue();
+}
+
+$horizontalCollection= Mage::getModel('cmsmart_pricematrix/horizontal')
+    ->getCollection()
+    ->addFieldToFilter('product', array('eq'=>$currentProduct));
+
+foreach($horizontalCollection as $horizontal){
+    $optionIdArray[] = $horizontal->getValue();
+}
+
+$optionModel = Mage::getModel('catalog/product_option');
+
+if(count($optionIdArray) > 0){
+    $optionCollection = $optionModel->getCollection()
+        ->addFieldToFilter('product_id', array('eq'=>$currentProduct))
+        ->addFieldToFilter('type', array('eq'=>'matrix'))
+        ->addFieldToFilter('option_id', array('nin'=>$optionIdArray));
+}else{
+    $optionCollection = $optionModel->getCollection()
+        ->addFieldToFilter('product_id', array('eq'=>$currentProduct))
+        ->addFieldToFilter('type', array('eq'=>'matrix'));
+}
+
+$verticalGroupCollection = Mage::getModel('cmsmart_pricematrix/verticalhorizontal')
+    ->getCollection()
+    ->addFieldToFilter('direct', array('eq'=>'vertical'))
+    ->addFieldToFilter('product', array('eq'=>$currentProduct));
+
+$horizontalGroupCollection = Mage::getModel('cmsmart_pricematrix/verticalhorizontal')
+    ->getCollection()
+    ->addFieldToFilter('direct', array('eq'=>'horizontal'))
+    ->addFieldToFilter('product', array('eq'=>$currentProduct));
+
+$matrixCollection = Mage::getModel('cmsmart_pricematrix/matrix')
+    ->getCollection()
+    ->addFieldToFilter('product', array('eq'=>$currentProduct));
+
+?>
+
+
+
+<div class="col-left">
+    <div id="all-attributes" class="attributes left-attributes">
+        <div class="label">Attributes</div>
+        <div class="connected">
+            <?php foreach($optionCollection as $option):?>
+                <div class="item">
+                    <input type="checkbox" name="attr[]" value="<?php echo $option->getOptionId(); ?>" />
+                    <?php echo $optionModel->getOptionTitle($option);?>
+                </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    #vertical-attributes-group .slimScrollDiv {
+        overflow: visible !important;
+    }
+
+    #horizontal-attributes-group .slimScrollDiv {
+        overflow: visible !important;
+    }
+    .slimScrollDiv #vertical-scroll {
+        width: 98% !important;
+    }
+    .slimScrollDiv #horizontal-scroll {
+        width: 98% !important;
+    }
+
+    .slimScrollDiv #vertical-result {
+        width: 98% !important;
+    }
+
+    .slimScrollDiv #horizontal-result {
+        width: 98% !important;
+    }
+
+
+</style>
+
+<div class="col-right">
+
+    <div id="vertical-attributes" class="attributes right-attributes">
+        <input type="hidden" name="direct" value="vertical" />
+        <input type="hidden" name="matrix_product" value="<?php echo $this->getRequest()->getParam('id');?>" />
+        <div class="label">Vertical</div>
+        <div class="connected" id="vertical-scroll">
+            <?php if(count($verticalCollection) > 0):?>
+                <?php foreach($verticalCollection as $vertical):?>
+                    <div class="item">
+                        <input checked="checked" type="checkbox" name="attr[]" value="<?php echo $vertical->getValue(); ?>" />
+                        <?php echo $vertical->getTitle();?>
+                    </div>
+                <?php endforeach;?>
+            <?php endif;?>
+            <div class="sortable-placeholder">Drag and Drop Attributes here</div>
+        </div>
+
+        <div id="btn-show-vertical" class="btn-show" onclick="getData('vertical','<?php echo Mage::getUrl("pricematrix/index/index"); ?>')">
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'cmsmart/pricematrix/show-vertical.jpg';?>"/>
+        </div>
+    </div>
+
+
+
+
+    <div id="horizontal-attributes" class="attributes right-attributes">
+        <input type="hidden" name="direct" value="horizontal" />
+        <input type="hidden" name="matrix_product" value="<?php echo $this->getRequest()->getParam('id');?>" />
+        <div class="label">Horizontal</div>
+        <div class="connected" id="horizontal-scroll">
+            <?php if(count($horizontalCollection) > 0):?>
+                <?php foreach($horizontalCollection as $horizontal):?>
+                    <div class="item">
+                        <input checked="checked" type="checkbox" name="attr[]" value='<?php echo $horizontal->getValue(); ?>' />
+                        <?php echo $horizontal->getTitle();?>
+                    </div>
+                <?php endforeach;?>
+            <?php endif;?>
+            <div class="sortable-placeholder">Drag and Drop Attributes here</div>
+        </div>
+
+        <div id="btn-show-horizontal" class="btn-show" onclick="getData('horizontal','<?php echo Mage::getUrl("pricematrix/index/index"); ?>')">
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'cmsmart/pricematrix/show-horizontal.jpg';?>"/>
+        </div>
+    </div>
+
+
+    <div>
+        <div class="left-down-button down-button">
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'cmsmart/pricematrix/down-button.png';?>"/>
+        </div>
+
+        <div class="right-down-button down-button">
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'cmsmart/pricematrix/down-button.png';?>"/>
+        </div>
+    </div>
+
+
+    <div id="matrix-data">
+        <input type="hidden" name="matrix_product" value="<?php echo $this->getRequest()->getParam('id');?>" />
+
+        <div id="vertical-attributes-group" class="attributes right-attributes">
+            <div class="label">Vertical Group</div>
+
+            <div class="select-unselect-all">
+                <div class="select-all all">
+                    <input type="radio" id="select-vertical" name="select-unselect-vertical" onclick="toggleSelect('select','vertical')" />
+                    <label for="select-vertical">Select all</label>
+                </div>
+                <div class="unselect-all all">
+                    <input type="radio" id="unselect-vertical" name="select-unselect-vertical" onclick="toggleSelect('unselect','vertical')" />
+                    <label for="unselect-vertical">Unselect all</label>
+                </div>
+            </div>
+
+            <div id="vertical-result" class="connected">
+                <div id="sub-vertical-result">
+                    <?php if(count($verticalGroupCollection) > 0):?>
+                        <?php foreach($verticalGroupCollection as $verticalGroup):?>
+                            <div class="item">
+                                <input class="vertical-checkbox" checked="checked" type="checkbox" name="attr[vertical][]" value='<?php echo $verticalGroup->getValue(); ?>' />
+                                <?php echo $verticalGroup->getTitle();?>
+                            </div>
+                        <?php endforeach;?>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+
+        <div id="horizontal-attributes-group" class="attributes right-attributes">
+            <div class="label">Horizontal Group</div>
+
+            <div class="select-unselect-all">
+                <div class="select-all all">
+                    <input type="radio" id="select-horizontal" name="select-unselect-horizontal" onclick="toggleSelect('select','horizontal')" />
+                    <label for="select-horizontal">Select all</label>
+                </div>
+                <div class="unselect-all all">
+                    <input type="radio" id="unselect-horizontal" name="select-unselect-horizontal" onclick="toggleSelect('unselect','horizontal')" />
+                    <label for="unselect-horizontal">Unselect all</label>
+                </div>
+            </div>
+
+            <div id="horizontal-result" class="connected">
+                <div id="sub-horizontal-result">
+                    <?php if(count($horizontalGroupCollection) > 0):?>
+                        <?php foreach($horizontalGroupCollection as $horizontalGroup):?>
+                            <div class="item">
+                                <input class="horizontal-checkbox" checked="checked" type="checkbox" name="attr[horizontal][]" value='<?php echo $horizontalGroup->getValue(); ?>' />
+                                <?php echo $horizontalGroup->getTitle();?>
+                            </div>
+                        <?php endforeach;?>
+                    <?php endif;?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div onclick="createMatrix('<?php echo Mage::getUrl("pricematrix/index/matrix"); ?>')" class="btn-show" id="btn-show-horizontal">
+        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'cmsmart/pricematrix/preview-matrix.jpg'?>">
+    </div>
+    <div onclick="createMatrix('<?php echo Mage::getUrl("pricematrix/index/matrix"); ?>')" class="btn-show" id="btn-show-horizontal">
+        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'cmsmart/pricematrix/down-button.png';?>"/>
+    </div>
+
+</div>
+
+
+
+<div id="matrix-result">
+    <?php if(count($matrixCollection) > 0):?>
+        <?php foreach($matrixCollection as $matrix):?>
+            <?php echo json_decode($matrix->getValue());?>
+        <?php endforeach;?>
+    <?php endif;?>
+</div>
+
+
+
+</section>
+
+<script type="text/javascript">
+    //<![CDATA[
+    $j(function() {
+        $j('.connected').sortable({
+            connectWith: '.connected'
+        });
+    });
+    //]]>
+</script>
+
+
+
+<script type="text/javascript">
+    $j(function(){
+
+        $j('#vertical-scroll').slimScroll({
+            alwaysVisible: true,
+            railVisible: true
+        });
+
+        $j('#horizontal-scroll').slimScroll({
+            alwaysVisible: true,
+            railVisible: true
+        });
+
+        $j('#sub-vertical-result').slimScroll({
+            alwaysVisible: true,
+            railVisible: true
+        });
+
+        $j('#sub-horizontal-result').slimScroll({
+            alwaysVisible: true,
+            railVisible: true
+        });
+
+    });
+</script>
+
+<?php endif;?>

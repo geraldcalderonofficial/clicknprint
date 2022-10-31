@@ -1,0 +1,48 @@
+<?php echo Mage::helper('core/nborderupload')->integrateOrderUpload(); ?>
+<p></p>
+<?php $_product = $this->getProduct(); $cur_symbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();if($cur_symbol == "") $cur_symbol = "AED";?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+        <label for="qty"><?php echo $this->__('Qty:') ?></label>
+        <div class="qty-holder">
+            <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+            <input type="hidden" name="currency_symbol" id="currency_symbol" maxlength="12" value="<?php echo $cur_symbol ?>" />			<div class="qty-changer">
+                <a href="javascript:void(0)" class="qty_inc"><i class="icon-up-dir"></i></a>
+                <a href="javascript:void(0)" class="qty_dec"><i class="icon-down-dir"></i></a>
+            </div>
+        </div>
+        <?php endif; ?>
+        <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><i class="icon-cart"></i><?php echo $buttonTitle ?></span></span></button>
+        <span id='ajax_loader' style='display:none'><i class="ajax-loader small animate-spin"></i></span>
+		<?php echo $this->getChildHtml('', true, true) ?>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">    
+	jQuery( document ).ready(function() {
+		jQuery("#qty").on('change keyup paste', function() {
+			if(!jQuery('input:radio:checked').length && 
+				!jQuery('input:checkbox:checked').length &&
+				!jQuery('input:selected:checked').length) {
+				
+					jQuery("#qty_right").trigger("click");
+					jQuery("#qty_right").focus();
+					jQuery("#qty").focus();
+				
+			}
+		
+			if(jQuery("input[type='radio']:checked")) 
+				jQuery("input[type='radio']:checked").prop("checked", true).trigger("click");
+			if(jQuery("input[type='checkbox']:checked")) 
+				jQuery("input[type='checkbox']:checked").prop("checked", true).trigger("click");
+			if(jQuery("input[type='selected']:checked")) 
+				jQuery("select option:selected").prop("selected", true).trigger("click");
+			
+			jQuery("#qty_right").val(jQuery("#qty").val());
+			$$(".product-custom-option").each(function (a) {
+				fireCustomEvent(a,'change','allelements');
+			});
+		});
+	});
+</script>

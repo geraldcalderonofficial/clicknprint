@@ -1,0 +1,394 @@
+<?xml version="1.0"?>
+<config>
+  <tabs>
+	   <NextBits_Extensions translate="label" module="formulacsvpricing">
+			<label>NextBits - Extensions</label>
+			<sort_order>100</sort_order>
+	   </NextBits_Extensions>
+    </tabs>
+   <sections>
+       <formulacsvpricing>
+            <label>Formula Pricing Pro</label>
+            <tab>NextBits_Extensions</tab>
+            <class>formulacsvpricing</class>
+            <frontend_type>text</frontend_type>
+            <sort_order>150</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+			<groups>
+					<reference translate="label">
+                        <label>Reference</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>0</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+						<comment><![CDATA[
+							<style>
+								.reference { width: 22%;float: left;padding: 10px;border-right: 1px black dotted;height: 208px;margin-bottom: 14px;}
+								.reference-last {border-right:0px;}
+								.reference h4 {text-align: center;}
+								h3 {text-align: center;}
+								.reference-table {width: 95%;}
+								span.operator {	color: red;	}
+							</style>
+							<h3>Reference</h3>
+							
+							<ul class="reference">
+								<li>
+									<h4>Reserved Variable names</h4>
+									<table class="reference-table">
+										<tr>
+											<td>{price}</td><td>&nbsp;:&nbsp;</td><td>Product base price</td>
+										</tr>	
+										<tr>
+											<td>{newprice}</td><td>&nbsp;:&nbsp;</td><td>Calculated price by formula can be use in upcharge / discount</td>
+										</tr>	
+										<tr>
+											<td>{qty}</td><td>&nbsp;:&nbsp;</td><td>Product quantity</td>
+										</tr>	
+										<tr>	
+											<td>{weight}</td><td>&nbsp;:&nbsp;</td><td>Product weight</td>
+										</tr>
+									</table>
+								<li>
+							</ul>
+							<ul class="reference">	
+								<li><h4>Calculation Operators</h4>
+									<table class="reference-table">
+										<tr>
+											<td>*</td><td>&nbsp;:&nbsp;</td><td>Multiptdcation</td>
+										</tr>	
+										<tr>	
+											<td>/</td><td>&nbsp;:&nbsp;</td><td>Division</td>
+										</tr>	
+										<tr>		
+											<td>+</td><td>&nbsp;:&nbsp;</td><td>Addition</td>
+										</tr>	
+										<tr>		
+											<td>-</td><td>&nbsp;:&nbsp;</td><td>Subtraction</td>
+										</tr>	
+										<tr>		
+											<td>( )</td><td>&nbsp;:&nbsp;</td><td>Order of operation</td>
+										</tr>
+									</table>
+								<li>								
+							</ul>
+							<ul class="reference ">	
+								<li>
+									<h4>Comparision Operators</h4>
+									<table class="reference-table">
+									<tr>									
+										<td>></td><td>&nbsp;:&nbsp;</td><td>Grater than</td>
+									</tr>	
+									<tr>	
+										<td><</td><td>&nbsp;:&nbsp;</td><td>Less than</td>
+									</tr>	
+									<tr>
+										<td>==</td><td>&nbsp;:&nbsp;</td><td>Equals</td>
+									</tr>	
+									<tr>		
+										<td>>=</td><td>&nbsp;:&nbsp;</td><td>Grater than or Equals to</td>
+									</tr>	
+									<tr>			
+										<td><=</td><td>&nbsp;:&nbsp;</td><td>Less than or Equals to</td>
+									</tr>	
+									<tr>			
+										<td>!=</td><td>&nbsp;:&nbsp;</td><td>Not Equal</td>
+									</tr>	
+									<tr>			
+										<td>!</td><td>&nbsp;:&nbsp;</td><td>Logical Not</td>
+									</tr>	
+									<tr>			
+										<td>||</td><td>&nbsp;:&nbsp;</td><td>Logical OR</td>
+									</tr>	
+									<tr>			
+										<td>&&</td><td>&nbsp;:&nbsp;</td><td>Logical AND</td>									
+									</tr>
+									</table>
+								<li>
+							</ul>
+							<ul class="reference reference-last">
+								<li>
+									<h4>Function Reference</h4>
+									<table class="reference-table">
+										<tr>
+											<td>round()</td><td>&nbsp;:&nbsp;</td><td>Rounds a float eg : round(3.4) = 3 , round(3.6) = 4</td>
+										</tr>	
+										<tr>
+											<td>ceil()</td><td>&nbsp;:&nbsp;</td><td>Round fractions up eg : ceil(3.4) = 4 , ceil(-3.4) = -3</td>
+										</tr>	
+										<tr>
+											<td>floor()</td><td>&nbsp;:&nbsp;</td><td>Round fractions down eg : floor(3.4) = 3 , floor(-3.4) = -4</td>
+										</tr>	
+										<tr>	
+											<td>abs()</td><td>&nbsp;:&nbsp;</td><td>Absolute value eg : abs(-4.2) = 4.2</td>
+										</tr>
+									</table>
+								<li>
+							</ul>
+						]]></comment>
+						
+					</reference>	
+                    <general translate="label">
+                        <label>General Settings</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>1</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+						<fields>
+							<enabled translate="label">
+								<label>Enable</label>
+								<comment>
+									<![CDATA[Activate Formula pricing pro module]]>
+								</comment>
+								<frontend_type>select</frontend_type>
+								<source_model>adminhtml/system_config_source_yesno</source_model>
+								<sort_order>0</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</enabled>
+                            <formula_csv_final translate="label">
+								<label>Final Equation for Price</label>
+								<comment>
+									<![CDATA[Example : {sqft}*{price}*{qty}+{fixed_surcharge}+{print_type};]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>1</sort_order>
+                               <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </formula_csv_final>
+							<additional_variable translate="label">
+                                <label>Static Variables For Equation</label>
+								<comment>
+									<![CDATA[Example : fixed_surcharge=>100;inch_per_feet=>12;]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>2</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </additional_variable>
+							<custom_variable_formula translate="label">
+								<label>Static Variables ( Formula Based ) For Equation</label>
+								<comment>
+									<![CDATA[Example : sqft=>(({width}/{inch_per_feet})*({height}/{inch_per_feet}));]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>3</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </custom_variable_formula>
+							<assign_variable translate="label">
+                                <label>Assign Variable to Custom Option Title</label>
+								<comment>
+									<![CDATA[Example : Width (Inches)=>width;Height (Inches)=>height;Print Type=>print_type;]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>4</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </assign_variable>
+							<option_values translate="label">
+								<label>Assign Variable to Custom Option Values</label>
+								<comment>
+									<![CDATA[Example : {Two Side Printing}=>10;{One Side Printing}=>5;{width_default}=>12;{height_default}=>12;{height_price}=>12;]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>5</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </option_values>
+							<extra_price_formula translate="label">
+                                <label>Extra Price Formula (Discount / Upcharge)</label>
+								<comment>
+									<![CDATA[Example : ({sqft}>=100 && {sqft}<=200)=>-({newprice}*0.5/100);]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>6</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </extra_price_formula>
+							<min_input_setting translate="label">
+                                <label>Min Input Setting</label>
+								<comment>
+									<![CDATA[Example : width=>12; height=>12;]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>7</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </min_input_setting>
+							<min_input_validation translate="label">
+								<label>Min Input Validation Msg</label>
+								<comment>
+									<![CDATA[Example : Minimum {title} is {min} -> Minimum Width (Inches) is 100]]>
+								</comment>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>8</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </min_input_validation>
+							<max_input_setting translate="label">
+                                <label>Max Input Setting</label>
+								<comment>
+									<![CDATA[Example : width=>1200; height=>1200;]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>9</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </max_input_setting>
+							<max_input_validation translate="label">
+								<label>Max Input Validation Msg</label>
+								<comment>
+									<![CDATA[Example : Maximum {title} is {max} -> Maximum Width (Inches) is 1200]]> 
+								</comment>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>10</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </max_input_validation>
+							<custom_validation translate="label">
+                                <label>Custom Validation</label>
+								<comment>
+									<![CDATA[Example : {width}>1201=>Please ask for quote.;]]>
+								</comment>
+                                <frontend_type>textarea</frontend_type>
+                                <sort_order>11</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </custom_validation>
+							<enabled_qtyswitcher translate="label">
+								<label>Enable Quantity Switcher</label>
+								<comment>
+									<![CDATA[This will show qty switch (+ / -) buttons beside qty box]]>
+								</comment>
+								<frontend_type>select</frontend_type>
+								<source_model>adminhtml/system_config_source_yesno</source_model>
+								<sort_order>14</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+							</enabled_qtyswitcher>
+							<changeprice translate="label comment">
+								<label>Change Price</label>
+								<comment></comment>
+								<frontend_type>select</frontend_type>
+								<source_model>NextBits_FormulaCSVPricing_Model_Adminhtml_System_Config_Source_changeprice</source_model>
+								<comment>
+									<![CDATA[On the Fly : change price when any option or qty change. <br /> On Button Click : change price when click on calculate price button. ]]>
+								</comment>
+								<sort_order>15</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+							</changeprice>
+							<buttonlabel translate="label">
+                                <label>Button Label</label>
+								<comment>
+									<![CDATA[button text]]> 
+								</comment>
+								<depends>
+									<changeprice>0</changeprice>
+								</depends>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>16</sort_order>
+                                <show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+								<depends>
+									<enabled>1</enabled>
+								</depends>
+                            </buttonlabel>
+						</fields>
+					</general> 
+            </groups>
+        </formulacsvpricing>
+	   <license module="formulacsvpricing">
+				<label>License Manager</label>
+				<tab>NextBits_Extensions</tab>
+				<frontend_type>text</frontend_type>
+				<sort_order>10</sort_order>
+				<show_in_default>1</show_in_default>
+				<show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+				<groups>
+					<formulacsvpricing_license  translate="label">
+						<label>Formula Pricing Pro License</label>
+						<frontend_type>text</frontend_type>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						 <fields>
+								<domains translate="label">
+									<frontend_type>text</frontend_type>
+									<!-- <frontend_model>nbcore/adminhtml_system_config_form_multiline</frontend_model>
+									<backend_model>nbcore/system_config_backend_license</backend_model> -->
+									<frontend_model>NextBits_Nbcore_Block_Adminhtml_System_Config_Form_Multiline</frontend_model>
+									<backend_model>NextBits_Nbcore_Model_System_Config_Backend_License</backend_model>
+									<sort_order>1</sort_order>
+									<show_in_default>1</show_in_default>
+									<show_in_website>0</show_in_website>
+									<show_in_store>0</show_in_store>
+								</domains>
+						</fields>
+					</formulacsvpricing_license>
+				</groups>
+		</license>
+	
+	</sections>
+</config>

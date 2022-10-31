@@ -1,0 +1,33 @@
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+
+
+$j(document).ready(function(){
+    $j("#pricematrix-table").tooltip({
+        items: "td",
+        content: function(){return $j(this).attr('tooltip');}
+    }).tooltip("open");
+
+    $j('#pricematrix-table tr td').click(function (){
+        $j(this).children('input:radio').prop('checked', true).trigger('change');
+        $j('#pricematrix-table tr td').removeClass("active");
+        $j('#pricematrix-table tr td').removeClass("highlight");
+        $j('#pricematrix-table tr').removeClass("active");
+        var className = $j(this).attr('class');
+        if(className){
+            $j('#pricematrix-table tr td.' + className).addClass("active");
+        }
+        $j(this).parent('tr').addClass("active");
+        $j(this).addClass('highlight');
+
+        var range = $j(this).attr('range');
+        $j('#qty').removeClass().addClass('input-text qty required-entry validate-digits-range digits-range-'+range);
+
+        var min = $j(this).attr('minqty');
+        $j('#qty').val(min);
+    });
+
+});

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+     <catalog_product_view>
+		<reference name="head">
+			<action method="addJs"><script>formulacsvpricing/formulacsvpricing.js</script></action>
+		</reference>
+		<!-- <reference name="product.info.options">
+            <block type="formulacsvpricing/formulacsvpricing" before="product.info.description" name="formulacsvpricing" template="formulacsvpricing/formulacsvpricing.phtml" as="formulacsvpricing" >
+            </block>
+        </reference> -->
+		<reference name="product.info.options">
+				<action method="setTemplate"><template>formulacsvpricing/catalog/product/view/options.phtml</template></action>
+		</reference>
+		<reference name="product.info.addtocart">
+			<action method="setTemplate"><template>formulacsvpricing/catalog/product/view/addtocart.phtml</template></action>
+		</reference>
+    </catalog_product_view>
+</layout>

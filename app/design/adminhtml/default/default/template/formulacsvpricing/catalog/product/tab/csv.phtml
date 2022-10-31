@@ -1,0 +1,85 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Upload CSV File');?></h4>
+    </div>
+    <div class="box">
+            <div class="hor-scroll">
+			<?php if(Mage::registry('current_product')->getId()):?>
+				<table class="dynamic-grid" cellspacing="0" id="attribute-labels-table">
+                <tr>
+                <?php foreach ($this->getStores() as $_store): ?>
+                    <th class="entry-edit-head"><h4><?php echo $_store->getName() ?></h4></th>
+                <?php endforeach; ?>
+                </tr>
+				<tr>
+
+					 <?php foreach ($this->getStores() as $_store): ?>
+						
+						<td class="store-csv">
+							<?php echo $this->__('Please Choose The File:');?> <input type="file" name="formulacsvpricing_option_csv_price_0_<?php echo $_store->getId();?>" id="csv_pricing" />
+							<?php $csv =$this->getCsvPathFile(Mage::registry('current_product')->getId(),0,$_store->getId());?>
+							<?php if(!empty($csv)):?>
+							<div class="remove-section">
+							<div class="remove-label">
+								<input type="checkbox" name="formulacsvpricing_remove_file[0][<?php echo $_store->getId();?>]" />
+							</div>
+							<div class="file-remove"><?php echo $this->__('Remove');?></div>
+							</div>
+							<?php echo $csv;?>
+							&nbsp;&nbsp;
+							<a href="#" onclick="openMyPopup('<?php echo $this->getUrl('formulacsvpricing/adminhtml_formulacsvpricing',array('pid'=>Mage::registry('current_product')->getId(),'option_id'=>0,'store_id'=>$_store->getId()));?>');"><?php echo $this->__('View');?></a>
+							<?php endif;?>
+						</td>
+						<?php endforeach; ?>
+						</tr>
+                </table>
+			<?php endif;?>
+            </div>
+    </div>
+
+
+</div>
+
+<style>
+	#attribute-labels-table tr td {  border: 1px solid #CACACA;padding: 5px;}
+	.remove-label { float: left; }
+	.store-csv { width:400px;}
+	.dynamic-grid td input { width:auto;}
+	.file-remove {  float: left;margin-left: 6px;margin-top: 2px; }
+	.remove-section {overflow:hidden;}
+</style>
+
+<script type="text/javascript">
+    function openMyPopup(url) {
+		
+        var url = url;
+        if ($('browser_window') && typeof(Windows) != 'undefined') {
+            Windows.focus('browser_window');
+            return;
+        }
+        var dialogWindow = Dialog.info(null, {
+            closable:true,
+            resizable:true,
+            draggable:true,
+            className:'magento',
+            windowClassName:'popup-window',
+            title:'CSV Pricesheet',
+            top:50,
+            width:900,
+            height:600,
+            zIndex:1000,
+            recenterAuto:true,
+            hideEffect:Element.hide,
+            showEffect:Element.show,
+            id:'browser_window',
+            url:url,
+            onClose:function (param, el) {
+             
+            }
+        });
+		return false;
+    }
+    function closePopup() {
+        Windows.close('browser_window');
+    }
+</script>

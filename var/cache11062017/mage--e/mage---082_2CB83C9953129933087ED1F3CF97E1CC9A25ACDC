@@ -1,0 +1,168 @@
+<style>
+.owl-bottom-narrow .owl-controls {
+	position: absolute;
+	bottom: 10px;
+	margin: 0;
+	width: 100%;
+}
+
+.category-products .products-grid li.item .details-area .product-name {
+      margin: 0 0 3px 0;
+      padding: 0 5px;
+}
+
+</style>
+
+<div class="owl-bottom-narrow owl-banner-carousel" style="margin-bottom: 20px;">
+<div id="banner-slider-demo-6" class="owl-carousel owl-theme">
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/cslider01.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/cslider02.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/cslider03.jpg" /></div>
+		<div class="item" style="background: #f0f0f0; background-image: linear-gradient(#e8e8e8,#f0f0f0); position: relative; border-radius: 5px;"><img alt="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/canvas/cslider04.jpg" /></div>
+		
+</div>
+
+
+<script type="text/javascript">// <![CDATA[
+jQuery(function($){
+                
+$("#banner-slider-demo-6").owlCarousel({
+
+autoPlay:true,
+		lazyLoad: true,
+                    slideSpeed : 5000,
+                    paginationSpeed : 300,
+                    singleItem:true,
+                    responsiveRefreshRate: 50,
+                    slideSpeed: 5000,
+                    paginationSpeed: 400,
+                    stopOnHover: false,
+                    rewindNav: true,
+                    rewindSpeed: 500,
+                    navigation: false
+
+});
+            });
+// ]]></script>
+
+</div>
+
+
+<br>
+
+<div  class="col-md-11"   style="padding-left: 0; text-align:justify;">
+            <p>Displays is a great way to decorate your office of home. Choose between our Classic Canvas (mounted on a durable foam board) and our Deluxe Canvas (mounted on a wooden board). We offer 11 sizes and different finishing options so your canvas looks truly unique.</p>
+</div>
+
+
+<br>
+
+
+<div class="category-products">
+	<ul class="products-grid  columns4">  
+                    <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                              <a href="https://clicknprint.ae/index.php/displays/display-stands-fsu.html" title="FSU (Free Standing Units)" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/displays/disttn.jpg" alt="FSU (Free Standing Units)"></a>
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/displays/display-stands-fsu.html" title="FSU (Free Standing Units)">FSU (Free Standing Units)</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+                
+                      <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                              <a href="https://clicknprint.ae/index.php/displays/dump-bins.html" title="  Dump Bins" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/displays/dubitn.jpg" alt="  Dump Bins"></a>
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/displays/dump-bins.html" title="  Dump Bins">  Dump Bins</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+
+                    <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                              <a href="https://clicknprint.ae/index.php/displays/totems.html" title="  Totems" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/displays/totetn.jpg" alt="  Totems"></a>
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/displays/totems.html" title="  Totems">  Totems</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+                    <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                              <a href="https://clicknprint.ae/index.php/displays/counter-units.html" title=" Counter Units" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/displays/countn.jpg" alt=" Counter Units"></a>
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/displays/counter-units.html" title=" Counter Units"> Counter Units</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+                    <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                              <a href="https://clicknprint.ae/index.php/displays/leaflet-holders.html" title=" Leaflet Holders" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/displays/samptn.jpg" alt=" Leaflet Holders"></a>
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/displays/leaflet-holders.html" title=" Leaflet Holders"> Leaflet Holders</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+                     <li class="item" >
+                                 <div class="item-area">
+                                             <div class="product-image-area">
+                                                              <a href="https://clicknprint.ae/index.php/displays/tent-cards.html" title=" Tent Cards" class="product-image">
+                                                              <img id="product-collection-image-70" class="" src="https://clicknprint.ae/media/wysiwyg/cnp/slider/displays/samptn.jpg" alt=" Tent Cards"></a>
+                                             </div>
+                                            <div class="details-area">
+	                                                      <h2 class="product-name"><a href="https://clicknprint.ae/index.php/displays/tent-cards.html" title=" Tent Cards"> Tent Cards</a></h2>
+	                                                      <div class="actions">
+		                                                         <div class="clearer"></div>
+                                                               </div>
+                                              </div>                                
+                                  </div>
+                    </li>
+
+                   
+
+                   
+
+                  
+
+                     
+
+
+        </ul>
+</div>
+
+
+

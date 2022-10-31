@@ -1,0 +1,12 @@
+<?php
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+?>
+
+<?php if(Mage::helper('cmsmart_pricematrix')->isEnabled()):?>
+<?php $data = $this->getInfo(); ?>
+<h1><?php echo $data['value']; ?></h1>
+<?php endif;?>

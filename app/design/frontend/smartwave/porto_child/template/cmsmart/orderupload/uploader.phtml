@@ -1,0 +1,44 @@
+<?php 
+// get product current
+$currentproduct = Mage::registry('current_product');
+$id_current=$currentproduct->getId();
+$storeId = Mage::app()->getStore()->getStoreId();
+$product_id = Mage::registry('current_product')->getId();
+$attribute = Mage::getResourceModel('catalog/product')->getAttributeRawValue($product_id, 'order_upload', $storeId);
+if($attribute == 1){
+?>
+
+<div id="<?php echo $this->getHtmlId() ?>" class="uploader">
+    <div class="clear"></div>
+    <div class="no-display" id="<?php echo $this->getHtmlId() ?>-template">
+        <div id="{{id}}" class="file-row">
+        <span class="file-info">{{name}} ({{size}})</span>
+        <span class="delete-button"><?php echo $this->getDeleteButtonHtml() ?></span>
+        <span class="progress-text"></span>
+        <div class="clear"></div>
+        </div>
+    </div>
+    <div class="no-display" id="<?php echo $this->getHtmlId() ?>-template-progress">
+        {{percent}}% {{uploaded}} / {{total}}
+    </div>
+</div>
+<?php
+	// add current id product in json 
+	//Zend_Debug::dump(Mage::helper('core')->jsonDecode($this->getConfigJson()));
+	$config=Mage::helper('core')->jsonDecode($this->getConfigJson());
+	$config['product_id']=$id_current;
+	$config['url']=$config['url'].'&productid='.$id_current;
+	//Zend_Debug::dump($config['url']);exit();
+	$params=Mage::helper('core')->jsonEncode($config);
+	
+	//Zend_Debug::dump($params);
+?>
+<script type="text/javascript">
+//<![CDATA[
+
+var maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
+var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
+
+//]]>
+</script>
+<?php } ?>

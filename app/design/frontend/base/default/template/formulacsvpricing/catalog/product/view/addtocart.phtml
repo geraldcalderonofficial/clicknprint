@@ -1,0 +1,60 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+
+<?php $enableCalculateButton = Mage::getStoreConfig('formulacsvpricing/general/changeprice'); ?>
+<?php $enableQtySwitcher = Mage::getStoreConfig('formulacsvpricing/general/enabled_qtyswitcher'); ?>
+<?php $calculationButtonTitle = Mage::getStoreConfig('formulacsvpricing/general/buttonlabel'); ?>
+<?php $isFormulaPricingEnable = Mage::helper('formulacsvpricing')->isFormulaPricingEnable(); ?>
+
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+			<label for="qty"><?php echo $this->__('Qty:') ?></label>
+			<?php if($enableQtySwitcher == 1 && $isFormulaPricingEnable == 1): ?>					
+				<!-- qty switch -->
+					<span class="sp-quantity">
+						<span>
+							<input type='button' value='-' class='qtyminus qtychange' field='quantity' data-multi="-1" />
+						</span>
+						<span >
+							<input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty quntity-input" 
+							<?php if($enableCalculateButton==0 && $isFormulaPricingEnable == 1):?>
+							<?php else : ?>	
+								onchange="formulaCSVPricing.changeBasePrice();"
+							<?php endif; ?>	
+							/>
+						</span>			
+						<span > 
+							<input type='button' value='+' class='qtyplus qtychange' field='quantity' data-multi="1" />
+						</span>
+					</span>
+				<!-- qty switch -->
+			<?php else: ?>
+					<input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+			<?php endif;?>
+        <?php endif; ?>
+			<?php if($enableCalculateButton==0 && $isFormulaPricingEnable == 1):?>
+				<button style="margin-right:20px; clear:both;" type="button" title="<?php echo $calculationButtonTitle; ?>" class="button btn-cart" onclick="formulaCSVPricing.changeBasePrice();"><span><span><?php echo $calculationButtonTitle; ?></span></span></button>
+			<?php endif;?>		
+				<button type="button" title="<?php echo $buttonTitle ?>" id="product-addtocart-button" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+			<?php echo $this->getChildHtml('', true, true) ?>
+    </div>
+<?php endif; ?>
+<?php if($enableQtySwitcher == 1 && $isFormulaPricingEnable == 1): ?>	
+	<style>
+		.qtychange {width: 25px;height: 25px;}
+	</style>
+	<script>
+		jQuery(".qtychange").on("click", function () {
+			var $button = jQuery(this);
+			var $input = $button.closest('.sp-quantity').find("input.quntity-input");
+			
+			$input.val(function(i, value) {
+				return +value + (1 * +$button.data('multi'));
+			});
+			<?php if($enableCalculateButton!=0 && $isFormulaPricingEnable == 1):?>
+				formulaCSVPricing.changeBasePrice();
+			<?php endif;?>
+		});
+	</script>
+<?php endif; ?>

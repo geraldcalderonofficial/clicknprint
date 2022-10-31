@@ -1,0 +1,106 @@
+<?php
+/**
+ * @author Pham Hong Thanh
+ * @email thanhpham0990@gmail.com
+ * @skype thanhpham170990
+ */
+?>
+
+<?php if(Mage::helper('cmsmart_pricematrix')->isEnabled()):?>
+
+<?php
+
+/**
+ * Prepare data to save and show price matrix
+ */
+
+$product = Mage::registry('current_product')->getId();
+
+$verticalCollection = Mage::getModel('cmsmart_pricematrix/verticalhorizontal')
+    ->getCollection()
+    ->addFieldToFilter('product', array('eq'=>$product))
+    ->addFieldToFilter('direct', array('eq'=>'vertical'));
+$vertical = array();
+foreach($verticalCollection as $item){
+    $vertical[] = $item->getValue();
+}
+
+$horizontalCollection = Mage::getModel('cmsmart_pricematrix/verticalhorizontal')
+    ->getCollection()
+    ->addFieldToFilter('product', array('eq'=>$product))
+    ->addFieldToFilter('direct', array('eq'=>'horizontal'));
+$horizontal = array();
+foreach($horizontalCollection as $item){
+    $horizontal[] = $item->getValue();
+}
+
+if((count($vertical) > 0) && (count($horizontal) > 0)){
+
+    $html = "<table id='pricematrix-table'><tr>";
+
+    for($i=0; $i<= (count($vertical) + 1); $i++){
+        if($i == 0){
+            // th empty first
+            $html.= "<th colspan='2' rowspan='2' style='color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'></th>";
+
+//                    $html.= "<th style='color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'></th>";
+        }elseif($i == 1){
+//                    // th empty first
+//                    $html.= "<th style='color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'></th>";
+//                    $html.= "<th style='color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'></th>";
+        }else{
+            $v = json_decode($vertical[$i-2],true);
+            if(isset($v['first_count'])){
+                $rowspan = count($vertical)/(float)$v['first_count'];
+                if(($i - 1)%$rowspan == 1){
+                    $html.= "<td rowspan='".$rowspan."' style='font-size:1.1em; font-weight:bold; color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'>".$v['first_title']."</td>";
+                }
+                $html.= "<td style='font-size:1.1em; font-weight:bold; color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'>".$v['title']."</td>";
+            }else{
+                $html.= "<td colspan='2' style='font-size:1.1em; font-weight:bold; color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'>".$v['title']."</td>";
+            }
+        }
+
+        for($j=0; $j<count($horizontal); $j++){
+            $h = json_decode($horizontal[$j],true);
+            if($i==0){
+                $colspan = count($horizontal)/(float)$h['first_count'];
+                if($j%$colspan == 1){
+                    $html.= "<td colspan='".$colspan."' style='font-size:1.1em; font-weight:bold; color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'>".$h['first_title']."</td>";
+                }
+            }elseif($i==1){
+                $html .= "<th style='color:".Mage::helper('cmsmart_pricematrix')->getTextColor()."; background-color:".Mage::helper('cmsmart_pricematrix')->getBackgroundColor()."'>".$h['title']."</th>";
+            }else{
+                $symbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+                $basePrice = Mage::getModel('catalog/product')->load($product)->getFinalPrice();
+                $finalPrice = (float)$basePrice + (float)$v['price']  + (float)$h['price'];
+                $html .= "<td minqty='".$v['minqty'].$h['minqty']."' range='".$v['qty'].$h['qty']."' class='column-".$j."' tooltip='";
+                $html .= "<table>";
+                $tooltip = ($v['tooltip']+$h['tooltip']);
+                foreach($tooltip as $key=>$val){
+                    $html .= "<tr><td>". $key . "</td><td> : " . (float)$val.$symbol."</td></tr>";
+                }
+                $html .= "<tr><td>Base price</td><td> : ".$basePrice.$symbol."</td></tr>";
+                $html .= "<tr><td colspan=\"2\"><hr /></td></tr>";
+                $html .= "<tr><td>Total price</td><td> : " . $finalPrice.$symbol. "</td></tr>";
+                $html .= "</table>";
+                $html .= "'>";
+                $html .= "<input onchange='opConfig.reloadPrice()' style='visibility: hidden;' class='validate-one-required-by-name product-pricematrix-option' type='radio' name='matrix_options' title='". json_encode($tooltip) ."' value='".json_encode(($v['value']+$h['value']))."' /><span class='price_td'>". $finalPrice . "</span>".$symbol."</td>";
+            }
+        }
+
+        if($i%2==0)
+            $html .= "</tr><tr>";
+        else
+            $html .= "</tr><tr class='alt'>";
+    }
+
+    $html .="</tr></table>";
+}
+?>
+
+<div id="matrix-result">
+    <?php echo $html; ?>
+</div>
+
+<?php endif;?>

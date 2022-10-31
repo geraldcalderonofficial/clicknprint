@@ -1,0 +1,189 @@
+<config>
+    <modules>
+        <Cmsmart_Pricematrix>
+            <version>1.0.0</version>
+        </Cmsmart_Pricematrix>
+    </modules>
+
+    <global>
+
+        <blocks>
+            <cmsmart_pricematrix>
+                <class>Cmsmart_Pricematrix_Block</class>
+            </cmsmart_pricematrix>
+            <adminhtml>
+                <rewrite>
+                    <catalog_product_edit_tabs>Cmsmart_Pricematrix_Block_Adminhtml_Catalog_Product_Edit_Tabs</catalog_product_edit_tabs>
+                    <catalog_product_edit_tab_options_option>Cmsmart_Pricematrix_Block_Adminhtml_Catalog_Product_Edit_Tab_Options_Option</catalog_product_edit_tab_options_option>
+                </rewrite>
+            </adminhtml>
+            <catalog>
+                <rewrite>
+                    <product_view_options>Cmsmart_Pricematrix_Block_Catalog_Product_View_Options</product_view_options>
+                </rewrite>
+            </catalog>
+        </blocks>
+
+        <models>
+            <cmsmart_pricematrix>
+                <class>Cmsmart_Pricematrix_Model</class>
+                <resourceModel>cmsmart_pricematrix_resource</resourceModel>
+            </cmsmart_pricematrix>
+
+            <cmsmart_pricematrix_resource>
+                <class>Cmsmart_Pricematrix_Model_Resource</class>
+                <entities>
+                    <vertical>
+                        <table>pm_vertical</table>
+                    </vertical>
+                    <horizontal>
+                        <table>pm_horizontal</table>
+                    </horizontal>
+                    <vertical_horizontal>
+                        <table>pm_vertical_horizontal</table>
+                    </vertical_horizontal>
+                    <matrix>
+                        <table>pm_matrix</table>
+                    </matrix>
+                </entities>
+            </cmsmart_pricematrix_resource>
+
+            <catalog>
+                <rewrite>
+                    <product_option>Cmsmart_Pricematrix_Model_Catalog_Product_Option</product_option>
+                </rewrite>
+            </catalog>
+
+            <catalog_resource>
+                <rewrite>
+                    <product_option>Cmsmart_Pricematrix_Model_Resource_Catalog_Product_Option</product_option>
+                </rewrite>
+            </catalog_resource>
+        </models>
+
+        <resources>
+            <cmsmart_pricematrix_setup>
+                <setup>
+                    <module>Cmsmart_Pricematrix</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </cmsmart_pricematrix_setup>
+            <cmsmart_pricematrix_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </cmsmart_pricematrix_read>
+            <cmsmart_pricematrix_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </cmsmart_pricematrix_write>
+        </resources>
+
+        <helpers>
+            <cmsmart_pricematrix>
+                <class>Cmsmart_Pricematrix_Helper</class>
+            </cmsmart_pricematrix>
+        </helpers>
+
+        <events>
+            <pricematrix_catalog_product_save_after>
+                <observers>
+                    <cmsmart_pricematrix>
+                        <type>singleton</type>
+                        <class>Cmsmart_Pricematrix_Model_Observer</class>
+                        <method>pricematrixCatalogProductSaveAfter</method>
+                    </cmsmart_pricematrix>
+                </observers>
+            </pricematrix_catalog_product_save_after>
+        </events>
+
+        <catalog>
+            <product>
+                <options>
+                    <custom>
+                        <groups>
+                            <cmsmart translate="label" module="adminhtml">
+                                <label>Cmsmart</label>
+                                <render>cmsmart_pricematrix/adminhtml_catalog_product_edit_tab_options_type_cmsmart</render>
+                                <types>
+                                    <matrix translate="label" module="adminhtml">
+                                        <label>Matrix</label>
+                                    </matrix>
+                                </types>
+                            </cmsmart>
+                        </groups>
+                    </custom>
+                </options>
+            </product>
+        </catalog>
+    </global>
+
+    <frontend>
+        <routers>
+            <cmsmart_pricematrix>
+                <use>standard</use>
+                <args>
+                    <module>Cmsmart_Pricematrix</module>
+                    <frontName>pricematrix</frontName>
+                </args>
+            </cmsmart_pricematrix>
+
+            <checkout>
+                <args>
+                    <modules>
+                        <cmsmart_pricematrix before="Mage_Checkout">Cmsmart_Pricematrix</cmsmart_pricematrix>
+                    </modules>
+                </args>
+            </checkout>
+
+        </routers>
+        <layout>
+            <updates>
+                <cmsmart_pricematrix>
+                    <file>cmsmart/pricematrix.xml</file>
+                </cmsmart_pricematrix>
+            </updates>
+        </layout>
+    </frontend>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <cmsmart_pricematrix>
+                    <file>cmsmart/pricematrix.xml</file>
+                </cmsmart_pricematrix>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <use>admin</use>
+                <args>
+                    <modules>
+                        <Cmsmart_Pricematrix before="Mage_Adminhtml">Cmsmart_Pricematrix_Adminhtml</Cmsmart_Pricematrix>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <default>
+        <pricematrix>
+            <cmsmart>
+                <license_skuproduct>MG31</license_skuproduct>
+            </cmsmart>
+            <general>
+                <enabled>0</enabled>
+                <background_color>4D8A9D</background_color>
+                <text_color>FFFFFF</text_color>
+                <delimiter>x</delimiter>
+                <rowspan>1</rowspan>
+                <colspan>1</colspan>
+                <quantity></quantity>
+            </general>
+        </pricematrix>
+    </default>
+</config>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ME_Newsleteremail>
+            <version>0.1.0</version>
+        </ME_Newsleteremail>
+    </modules>
+    <global>
+        <helpers>
+            <newsleteremail>
+                <class>ME_Newsleteremail_Helper</class>
+            </newsleteremail>
+        </helpers>
+        <blocks>
+            <newsleteremail>
+                <class>ME_Newsleteremail_Block</class>
+            </newsleteremail>
+        </blocks>
+        <models>
+            <newsleteremail>
+                <class>ME_Newsleteremail_Model</class>
+            </newsleteremail>
+        </models>
+		
+		<template>
+            <email>
+                <newsletter_alert_template translate="label" module="newsleteremail">
+                    <label>Newsletter BCC Alert to Admin</label>
+                    <file>newsletter_subscr_success.html</file>
+                    <type>html</type>
+                </newsletter_alert_template>
+            </email>
+        </template>
+    </global>
+    <frontend>
+        <routers>
+            <ME_Newsleteremail>
+                <use>standard</use>
+                <args>
+                    <module>ME_Newsleteremail</module>
+                    <frontName>newsleteremail</frontName>
+                </args>
+            </ME_Newsleteremail>
+        </routers>
+
+        <!-- <translate>
+            <modules>
+                <ME_Newsleteremail>
+                    <files>
+                        <default>ME_Newsleteremail.csv</default>
+                    </files>
+                </ME_Newsleteremail>
+            </modules>
+        </translate> -->
+		
+		<events>
+            <newsletter_subscriber_save_after>
+                <observers>
+                    <me_newsleteremail>
+                        <type>singleton</type>
+                        <class>newsleteremail/observer</class>
+                        <method>newsletteralert</method>
+                    </me_newsleteremail>
+                </observers>
+            </newsletter_subscriber_save_after>
+        </events>
+    </frontend>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <newsleteremail after="Mage_Adminhtml">ME_Newsleteremail</newsleteremail>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <ME_Newsleteremail>
+                    <files>
+                        <default>ME_Newsleteremail.csv</default>
+                    </files>
+                </ME_Newsleteremail>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <newsleteremail>
+                                            <title>Newsleteremail Module</title>
+                                        </newsleteremail>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <newsleteremail>
+            <settings>
+                <enabled>1</enabled>                <!-- <bcc_subject>BCC Subscription Success</bcc_subject> -->                <bcc_emails>regnoredlac@gmail.com</bcc_emails>
+            </settings>
+        </newsleteremail>
+    </default>
+</config>

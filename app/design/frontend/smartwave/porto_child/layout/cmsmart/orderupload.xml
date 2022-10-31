@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			
+            <action method="addJs"><script>cmsmart/orderupload/product_upload.js</script></action>
+          	<!-- <action method="addJs"><script>cmsmart/orderupload/jquery.js</script></action> -->
+            <action method="addJs"><script>cmsmart/orderupload/jqueryuploadfiles.js</script></action>
+		</reference>
+	</default>
+	<catalog_product_view>
+		<!-- add js -->
+		<reference name="head">
+			<!--  add css and js for popup upload -->
+			<action method="addCss"><stylesheet>css/cmsmart/orderupload/orderupload.css</stylesheet></action>
+			<action method="addJs"><script>prototype/window.js</script></action>
+			<action method="addCss"><stylesheet>css/cmsmart/orderupload/prototype/windows/themes/default.css</stylesheet></action>
+			<!-- <action method="addJs"><script>orderupload/uploader_new.js</script></action> 
+            <action method="addJs"><script>cmsmart/orderupload/product_upload.js</script></action> -->
+		</reference>
+		
+		<reference name="content">
+			<block type="orderupload/catalog_product_form_gallery_content" name="gallery.productview" after="-"  template="cmsmart/orderupload/gallery.phtml" >
+				<!--
+				<block type="orderupload/media_uploader" name="uploader.productview" template="orderupload/uploader.phtml" />
+				-->
+			</block>
+		</reference>
+	</catalog_product_view>
+	
+</layout>
